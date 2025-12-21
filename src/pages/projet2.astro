@@ -1,0 +1,56 @@
+---
+import Layout from '@/layouts/Layout.astro'
+
+const title = "Projet 2 — Récupération d'énergie piézoélectrique"
+const subtitle =
+  "Étude et prototypage conceptuel : vibrations → énergie → stockage → alimentation low-power."
+const tags = ['Énergie', 'Piézo', 'Low-power', 'Embedded']
+---
+
+<Layout>
+  <section class="mb-12">
+    <h2 class="text-2xl font-bold mb-2">{title}</h2>
+    <p class="opacity-80">{subtitle}</p>
+
+    {tags.length > 0 && (
+      <div class="mt-4 flex flex-wrap gap-2">
+        {tags.map((t) => (
+          <span class="text-xs px-2 py-1 rounded-full border opacity-80">
+            {t}
+          </span>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <section class="mb-12">
+    <h3 class="text-xl font-bold mb-6 border-b pb-2">Problème</h3>
+    <p class="leading-relaxed opacity-90">
+      Comment récupérer une énergie faible et irrégulière (vibrations) et la
+      rendre exploitable pour alimenter un système embarqué (capteurs, MCU,
+      transmissions courtes) ?
+    </p>
+  </section>
+
+  <section class="mb-12">
+    <h3 class="text-xl font-bold mb-6 border-b pb-2">Axes</h3>
+    <ul class="list-disc pl-6 space-y-2 opacity-90">
+      <li>Chaîne d’énergie : source → redressement → gestion → stockage</li>
+      <li>Contraintes : démarrage à faible tension, rendement, fuites</li>
+      <li>Scénarios d’usage : réveils ponctuels, mesures, envoi BLE/Wi-Fi</li>
+    </ul>
+  </section>
+
+  <section class="mb-12">
+    <h3 class="text-xl font-bold mb-6 border-b pb-2">Suite</h3>
+    <p class="leading-relaxed opacity-90">
+      Poursuivre par un prototype : choix de composant de harvesting, mesures
+      réelles (tension/courant), comparaison supercondensateur vs batterie, et
+      stratégie logicielle low-power.
+    </p>
+  </section>
+
+  <a href="/projets" class="inline-block opacity-80 hover:opacity-100">
+    ← Retour aux projets
+  </a>
+</Layout>
