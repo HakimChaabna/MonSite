@@ -1,0 +1,36 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { projets } from "@/data/projets";
+import {template} from "@/settings";
+
+const ALL_PAPERS = projets; // This will be replaced with dynamic data later
+---
+
+<Layout title="Projets">
+  <div class="prose max-w-none">
+    <h1 class="text-3xl font-bold mb-8">Projets</h1>
+
+    <div class="space-y-8">
+      {projets.map((p) => (
+         <div class="card bg-base-200">
+           <div class="card-body">
+             <h2 class="card-title text-xl">
+               <a href={p.link} class="hover:text-accent">
+                 {p.title}
+               </a>
+             </h2>
+               <p class="text-sm mb-3">{p.date} • {p.tags.join(" • ")}</p>
+               <p class="text-sm text-base-content/80">{p.summary}</p>
+               <div class="card-actions justify-end mt-4">
+                 <a href={p.link} class="btn btn-sm btn-secondary text-secondary-content">
+                   Voir le projet
+                 </a>
+               </div>
+           </div>
+         </div>
+        ))
+
+      }
+    </div>
+  </div>
+</Layout>
