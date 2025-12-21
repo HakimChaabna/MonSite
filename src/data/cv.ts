@@ -18,10 +18,31 @@ export const experiences = [
 export const education = [
 	{
 		school: '',
-		time: '',
-		degree: '',
+		time: '2026 – 2029',
+		degree: 'Cycle ingénieur généraliste',
+		location: 'Formation d\'ingénieur généraliste orientée numérique : cybersécurité, IA et systèmes embarqués.',
+		description: 'ESIEA, Paris-Ivry',
+	},
+	{
+		school: '',
+		time: '2024 – 2026',
+		degree: 'Classe préparatoire MP',
+		location: 'Approfondissement en mathématiques, physique et informatique, développement de rigueur scientifique.',
+		description: 'Lycée Saint-Rémi, Roubaix',
+	},
+	{
+		school: '',
+		time: '2022 - 2024',
+		degree: 'Formation Préparatoire en Sciences et Techniques',
+		location: 'Formation pluridisciplinaire : physique appliquée, électronique, ingénierie.',
+		description: 'ESSA Tlemcen, Algérie',
+	},
+	{
+		school: '',
+		time: '2022',
+		degree: 'Baccalauréat scientifique',
 		location: '',
-		description: '',
+		description: 'Mention bien',
 	},
 	// {
 	// 	school: 'University of Paris',
