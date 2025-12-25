@@ -1,0 +1,56 @@
+---
+import Layout from '@/layouts/Layout.astro'
+
+const title = 'Projet 1 — Simulation proies-prédateurs'
+const subtitle =
+  "Cycles de population via un modèle discret (grille), visualisations et analyse."
+const tags = ['Python', 'Modélisation', 'Matplotlib']
+---
+
+<Layout>
+  <section class="mb-12">
+    <h2 class="text-2xl font-bold mb-2">{title}</h2>
+    <p class="opacity-80">{subtitle}</p>
+
+    {tags.length > 0 && (
+      <div class="mt-4 flex flex-wrap gap-2">
+        {tags.map((t) => (
+          <span class="text-xs px-2 py-1 rounded-full border opacity-80">
+            {t}
+          </span>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <section class="mb-12">
+    <h3 class="text-xl font-bold mb-6 border-b pb-2">Contexte</h3>
+    <p class="leading-relaxed opacity-90">
+      Objectif : observer des cycles proies-prédateurs en imposant des règles
+      locales sur une grille (inspiration “jeu de la vie”), puis analyser les
+      courbes de population.
+    </p>
+  </section>
+
+  <section class="mb-12">
+    <h3 class="text-xl font-bold mb-6 border-b pb-2">Ce que j’ai fait</h3>
+    <ul class="list-disc pl-6 space-y-2 opacity-90">
+      <li>Modèle discret sur grille avec règles de reproduction/mortalité</li>
+      <li>Animation GIF et graphiques (loups en barres, orignaux en courbes)</li>
+      <li>Expérimentations sur paramètres pour faire émerger des cycles stables</li>
+    </ul>
+  </section>
+
+  <section class="mb-12">
+    <h3 class="text-xl font-bold mb-6 border-b pb-2">Résultats</h3>
+    <p class="leading-relaxed opacity-90">
+      Mise en évidence de régimes : extinction, coexistence, oscillations
+      entretenues. Comparaison qualitative des dynamiques obtenues selon les
+      paramètres.
+    </p>
+  </section>
+
+  <a href="/projets" class="inline-block opacity-80 hover:opacity-100">
+    ← Retour aux projets
+  </a>
+</Layout>
