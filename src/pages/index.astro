@@ -8,7 +8,7 @@ import Hero from '@/components/ui/Hero.astro'
 import Grid from '@/components/ui/Grid.astro'
 import ArticleList from '@/components/ui/ArticleList.astro'
 
-const { fullName, title, institute, research_areas } = profile
+const { fullName, title, institute } = profile
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -25,13 +25,43 @@ const { fullName, title, institute, research_areas } = profile
 		/>
 	</section>
 
-	<!-- Research Areas -->
+	<!-- 1 -->
 	<section class='py-12 border-b'>
-		<Grid gridTitle='Compétences' gridItems={research_areas} />
+       <h class='text-4xl font-bold mb-4'>	
+           Titre
+	   </h>
+	   <h1 class='text-lg mb-6'>
+            Contenu
+       </h1>
 	</section>
 
-	<!-- Recent Publications -->
+	<!-- 2 -->
 	<section class='py-12 border-t'>
-		<ArticleList listTitle='Recent Publications' listItems={publications} />
+       <h class='text-4xl font-bold mb-4'>	
+           Titre
+	   </h>
+	   <h1 class='text-lg mb-6'>
+            Contenu
+       </h1>
+	</section>
+
+	<!-- 3 -->
+	<section class='py-12 border-t'>
+       <h class='text-4xl font-bold mb-4'>	
+           Titre
+	   </h>
+	   <h1 class='text-lg mb-6'>
+            Contenu
+       </h1>
+	</section>
+
+	<!-- 4 -->
+	<section class='py-12 border-t'>
+       <h class='text-4xl font-bold mb-4'>	
+           Titre
+	   </h>
+	   <h1 class='text-lg mb-6'>
+            Contenu
+       </h1>
 	</section>
 </Layout>
