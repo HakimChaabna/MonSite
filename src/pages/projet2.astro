@@ -1,56 +1,992 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 
-const title = "Projet 2 — Récupération d'énergie piézoélectrique"
-const subtitle =
-  "Étude et prototypage conceptuel : vibrations → énergie → stockage → alimentation low-power."
-const tags = ['Énergie', 'Piézo', 'Low-power', 'Embedded']
+const title = 'Capteur de maintenance prédictive'
+const subtitle = 'Un système embarqué autonome, alimenté par la chaleur des machines'
+const tags = ['ESP32', 'MicroPython', 'BLE', 'BQ25570', 'Thermoélectricité', 'TIPE 2025']
+const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
 ---
 
 <Layout>
-  <section class="mb-12">
-    <h2 class="text-2xl font-bold mb-2">{title}</h2>
-    <p class="opacity-80">{subtitle}</p>
-
-    {tags.length > 0 && (
-      <div class="mt-4 flex flex-wrap gap-2">
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  HERO                                       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-header">
+      <div class="hero-top-row">
+        <span class="hero-badge">{context}</span>
+        <span class="status-badge">🔧 Projet en cours</span>
+      </div>
+      <h1 class="hero-title">{title}</h1>
+      <p class="hero-subtitle">{subtitle}</p>
+      <div class="hero-tags">
         {tags.map((t) => (
-          <span class="text-xs px-2 py-1 rounded-full border opacity-80">
-            {t}
-          </span>
+          <span class="tag">{t}</span>
         ))}
       </div>
-    )}
+      <div class="hero-actions">
+        <a href="#probleme" class="btn-primary">Découvrir le projet ↓</a>
+        <a href="https://github.com/TON-GITHUB/capteur-predictif" target="_blank" class="btn-outline">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          Code source
+        </a>
+      </div>
+    </div>
   </section>
 
-  <section class="mb-12">
-    <h3 class="text-xl font-bold mb-6 border-b pb-2">Problème</h3>
-    <p class="leading-relaxed opacity-90">
-      Comment récupérer une énergie faible et irrégulière (vibrations) et la
-      rendre exploitable pour alimenter un système embarqué (capteurs, MCU,
-      transmissions courtes) ?
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  CHIFFRES CLÉS                             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="metrics">
+    <div class="metric">
+      <span class="metric-value">330 mV</span>
+      <span class="metric-label">tension de démarrage à froid</span>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric">
+      <span class="metric-value">3.5 µA</span>
+      <span class="metric-label">consommation capteur (BMA400)</span>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric">
+      <span class="metric-value">0</span>
+      <span class="metric-label">batterie nécessaire</span>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric">
+      <span class="metric-value">BLE</span>
+      <span class="metric-label">transmission sans fil</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  LE PROBLÈME                                -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="probleme" class="content-section">
+    <div class="section-label">01 — Le problème</div>
+    <h2 class="section-title">Surveiller des machines<br/>sans câble ni batterie</h2>
+    <div class="col-text-full">
+      <p>
+        Dans l'industrie, la surveillance des machines tournantes (moteurs, pompes, ventilateurs)
+        repose encore largement sur une <strong>maintenance systématique</strong> — coûteuse, rigide,
+        et souvent trop tardive. La maintenance prédictive, basée sur l'analyse vibratoire,
+        permet d'anticiper les pannes avant qu'elles ne surviennent.
+      </p>
+      <p>
+        Mais deux obstacles freinent son déploiement massif : le <strong>câblage</strong>,
+        difficile et coûteux sur des machines déjà en place, et l'<strong>alimentation</strong>,
+        qui impose des batteries à remplacer régulièrement.
+      </p>
+      <blockquote class="question-block">
+        « Comment concevoir un système de mesure sans fil, capable d'assurer un suivi
+        vibratoire précis, en s'alimentant exclusivement à partir du gradient thermique
+        d'une machine industrielle ? »
+      </blockquote>
+      <div class="challenges-row">
+        <div class="challenge">
+          <span class="challenge-num">1</span>
+          <p>Gérer une source d'énergie <strong>très faible et fluctuante</strong></p>
+        </div>
+        <div class="challenge">
+          <span class="challenge-num">2</span>
+          <p>Assurer une consommation <strong>ultra-basse</strong> du capteur et du MCU</p>
+        </div>
+        <div class="challenge">
+          <span class="challenge-num">3</span>
+          <p>Maintenir un <strong>ΔT suffisant</strong> sans refroidissement actif</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  LA CHAÎNE TECHNIQUE                        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section section-grey">
+    <div class="section-label">02 — La chaîne technique</div>
+    <h2 class="section-title">De la chaleur à la donnée</h2>
+    <p class="section-intro">
+      Le système transforme un gradient de température en données vibratoires exploitables,
+      à travers une chaîne de 4 étages optimisés pour l'ultra-basse consommation.
     </p>
+
+    <!-- Chaîne en 4 étages -->
+    <div class="chain-grid">
+      <div class="chain-card">
+        <div class="chain-number">1</div>
+        <div class="chain-icon">🔥</div>
+        <h4>Récupération</h4>
+        <span class="chain-component">TEG (Seebeck)</span>
+        <p>Un générateur thermoélectrique convertit le gradient de température de la machine en tension électrique (quelques centaines de mV).</p>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-card">
+        <div class="chain-number">2</div>
+        <div class="chain-icon">⚡</div>
+        <h4>Gestion d'énergie</h4>
+        <span class="chain-component">BQ25570</span>
+        <p>MPPT + boost converter. Démarrage à froid à 330 mV, charge optimisée d'un supercondensateur. Supervision de l'état énergétique.</p>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-card">
+        <div class="chain-number">3</div>
+        <div class="chain-icon">📡</div>
+        <h4>Acquisition</h4>
+        <span class="chain-component">ESP32 + BMA400</span>
+        <p>Réveil périodique depuis le deep sleep, mesure vibratoire 3 axes via I²C, calcul RMS, puis retour en sommeil profond.</p>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-card">
+        <div class="chain-number">4</div>
+        <div class="chain-icon">📲</div>
+        <h4>Transmission</h4>
+        <span class="chain-component">BLE</span>
+        <p>Envoi des données synthétisées via Bluetooth Low Energy — le protocole le plus sobre pour des trames courtes.</p>
+      </div>
+    </div>
   </section>
 
-  <section class="mb-12">
-    <h3 class="text-xl font-bold mb-6 border-b pb-2">Axes</h3>
-    <ul class="list-disc pl-6 space-y-2 opacity-90">
-      <li>Chaîne d’énergie : source → redressement → gestion → stockage</li>
-      <li>Contraintes : démarrage à faible tension, rendement, fuites</li>
-      <li>Scénarios d’usage : réveils ponctuels, mesures, envoi BLE/Wi-Fi</li>
-    </ul>
-  </section>
-
-  <section class="mb-12">
-    <h3 class="text-xl font-bold mb-6 border-b pb-2">Suite</h3>
-    <p class="leading-relaxed opacity-90">
-      Poursuivre par un prototype : choix de composant de harvesting, mesures
-      réelles (tension/courant), comparaison supercondensateur vs batterie, et
-      stratégie logicielle low-power.
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  LE CYCLE DE FONCTIONNEMENT                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section">
+    <div class="section-label">03 — Le cycle de fonctionnement</div>
+    <h2 class="section-title">Dormir, mesurer, transmettre, répéter</h2>
+    <p class="section-intro">
+      Le système fonctionne en boucle cyclique, synchronisée avec la disponibilité
+      réelle de l'énergie. Chaque cycle dure quelques secondes sur plusieurs minutes de sommeil.
     </p>
+
+    <div class="cycle-steps">
+      <div class="cycle-step">
+        <div class="cycle-step-header">
+          <span class="cycle-dot cycle-sleep"></span>
+          <h4>Phase de sommeil</h4>
+        </div>
+        <p>Le TEG alimente lentement le supercondensateur. L'ESP32 est en deep sleep (~10 µA). Le BMA400 est en veille (~3.5 µA). L'énergie s'accumule.</p>
+        <span class="cycle-duration">~1 à 5 min</span>
+      </div>
+      <div class="cycle-connector"></div>
+      <div class="cycle-step">
+        <div class="cycle-step-header">
+          <span class="cycle-dot cycle-wake"></span>
+          <h4>Réveil</h4>
+        </div>
+        <p>La tension du supercondensateur atteint le seuil. Le BQ25570 autorise l'alimentation. L'ESP32 sort du deep sleep et initialise les interfaces.</p>
+        <span class="cycle-duration">~50 ms</span>
+      </div>
+      <div class="cycle-connector"></div>
+      <div class="cycle-step">
+        <div class="cycle-step-header">
+          <span class="cycle-dot cycle-measure"></span>
+          <h4>Mesure & traitement</h4>
+        </div>
+        <p>Acquisition vibratoire 3 axes via I²C. Filtrage et calcul de la valeur RMS. Préparation de la trame de données.</p>
+        <span class="cycle-duration">~200 ms</span>
+      </div>
+      <div class="cycle-connector"></div>
+      <div class="cycle-step">
+        <div class="cycle-step-header">
+          <span class="cycle-dot cycle-send"></span>
+          <h4>Transmission BLE</h4>
+        </div>
+        <p>Envoi de la trame synthétisée via Bluetooth Low Energy. Déconnexion immédiate pour minimiser la consommation.</p>
+        <span class="cycle-duration">~100 ms</span>
+      </div>
+      <div class="cycle-connector"></div>
+      <div class="cycle-step">
+        <div class="cycle-step-header">
+          <span class="cycle-dot cycle-sleep"></span>
+          <h4>Retour en sommeil</h4>
+        </div>
+        <p>Désactivation de tous les périphériques. Retour en deep sleep. Le cycle recommence.</p>
+        <span class="cycle-duration">immédiat</span>
+      </div>
+    </div>
   </section>
 
-  <a href="/projets" class="inline-block opacity-80 hover:opacity-100">
-    ← Retour aux projets
-  </a>
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  COMPOSANTS CLÉS                            -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section section-grey">
+    <div class="section-label">04 — Les composants clés</div>
+    <h2 class="section-title">Chaque composant a été choisi pour sa sobriété</h2>
+
+    <div class="components-grid">
+      <div class="component-card">
+        <div class="component-tag">Énergie</div>
+        <h4>Générateur thermoélectrique (TEG)</h4>
+        <p>Convertit l'effet Seebeck en tension exploitable. Fonctionne avec un ΔT modéré grâce à un dissipateur à ailettes surdimensionné (~10 cm) exploitant la gravité pour le contact thermique.</p>
+      </div>
+      <div class="component-card">
+        <div class="component-tag">Gestion</div>
+        <h4>BQ25570 (Texas Instruments)</h4>
+        <p>Circuit de power management spécialisé energy harvesting. Démarrage à froid 330 mV, MPPT intégré, boost converter, supervision de charge avec seuils programmables.</p>
+      </div>
+      <div class="component-card">
+        <div class="component-tag">Stockage</div>
+        <h4>Supercondensateur</h4>
+        <p>Tampon énergétique entre production continue (TEG) et consommation impulsionnelle (ESP32). Grand nombre de cycles, faible ESR, pas de tension minimale.</p>
+      </div>
+      <div class="component-card">
+        <div class="component-tag">Capteur</div>
+        <h4>BMA400 (Bosch Sensortec)</h4>
+        <p>Accéléromètre MEMS triaxial ultra-basse consommation (3.5 µA). Fonction auto-wake-up intégrée, mesure numérique précise, interface I²C.</p>
+      </div>
+      <div class="component-card">
+        <div class="component-tag">Traitement</div>
+        <h4>ESP32 + MicroPython</h4>
+        <p>Microcontrôleur avec deep sleep (~10 µA), BLE intégré, programmé en MicroPython pour un prototypage rapide. Réveil périodique configurable.</p>
+      </div>
+      <div class="component-card">
+        <div class="component-tag">Communication</div>
+        <h4>Bluetooth Low Energy</h4>
+        <p>Protocole le plus sobre pour l'envoi de trames courtes. Connexion éphémère : envoi des données puis déconnexion immédiate.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  AVANCEMENT                                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section">
+    <div class="section-label">05 — Avancement</div>
+    <h2 class="section-title">Où en est le projet ?</h2>
+    <p class="section-intro">
+      Ce projet est actuellement en phase de conception et d'assemblage.
+      Voici la roadmap et l'état d'avancement de chaque étape.
+    </p>
+
+    <div class="roadmap">
+      <div class="roadmap-item done">
+        <div class="roadmap-status">✓</div>
+        <div class="roadmap-content">
+          <h4>Recherche & bibliographie</h4>
+          <p>Étude des fondements de la maintenance prédictive, de la thermoélectricité, et choix des composants.</p>
+        </div>
+      </div>
+      <div class="roadmap-item done">
+        <div class="roadmap-status">✓</div>
+        <div class="roadmap-content">
+          <h4>Architecture système</h4>
+          <p>Définition de la chaîne complète : TEG → BQ25570 → supercondensateur → ESP32 → BMA400 → BLE.</p>
+        </div>
+      </div>
+      <div class="roadmap-item done">
+        <div class="roadmap-status">✓</div>
+        <div class="roadmap-content">
+          <h4>Approvisionnement des composants</h4>
+          <p>Commande et réception du TEG, BQ25570, supercondensateur, BMA400, ESP32 et dissipateur.</p>
+        </div>
+      </div>
+      <div class="roadmap-item active">
+        <div class="roadmap-status">⏳</div>
+        <div class="roadmap-content">
+          <h4>Assemblage & câblage</h4>
+          <p>Montage physique du prototype, câblage de la chaîne d'énergie et connexion des capteurs.</p>
+        </div>
+      </div>
+      <div class="roadmap-item active">
+        <div class="roadmap-status">⏳</div>
+        <div class="roadmap-content">
+          <h4>Développement logiciel</h4>
+          <p>Code MicroPython : gestion du deep sleep, acquisition I²C, calcul RMS, transmission BLE.</p>
+        </div>
+      </div>
+      <div class="roadmap-item pending">
+        <div class="roadmap-status">○</div>
+        <div class="roadmap-content">
+          <h4>Tests & bilan de puissance</h4>
+          <p>Mesure de l'énergie produite vs consommée. Définition du rapport cyclique optimal.</p>
+        </div>
+      </div>
+      <div class="roadmap-item pending">
+        <div class="roadmap-status">○</div>
+        <div class="roadmap-content">
+          <h4>Validation vibratoire</h4>
+          <p>Test sur ventilateur, analyse fréquentielle, comparaison avec les seuils ISO 10816.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  CONCLUSION                                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section section-conclusion">
+    <div class="conclusion-box">
+      <h2>L'objectif de ce projet</h2>
+      <p>
+        Démontrer qu'un <strong>monitoring industriel permanent</strong> est possible
+        sans aucune source d'énergie externe ni batterie. Une solution concrète pour
+        une industrie plus durable et intelligente, alliant la physique des matériaux
+        à l'informatique embarquée.
+      </p>
+      <p>
+        Ce projet combine <strong>électronique analogique</strong> (TEG, BQ25570),
+        <strong>numérique</strong> (ESP32, MicroPython, BLE),
+        <strong>traitement du signal</strong> (FFT, RMS) et
+        <strong>physique</strong> (thermodynamique, mécanique vibratoire)
+        — les fondations de ma spécialisation en Data & IoT.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  FOOTER NAV                                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <nav class="project-nav">
+    <a href="/projets" class="nav-back">← Retour aux projets</a>
+    <div class="nav-links">
+      <a href="/documents/MCOT-capteur-predictif.pdf" target="_blank" class="btn-outline">
+        📄 Fiche MCOT
+      </a>
+      <a href="https://github.com/TON-GITHUB/capteur-predictif" target="_blank" class="btn-primary">
+        Voir le code source →
+      </a>
+    </div>
+  </nav>
 </Layout>
+
+<style>
+  /* ════════════════════════════════════════════
+     VARIABLES
+     ════════════════════════════════════════════ */
+  :root {
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --grey-bg: #f0f0f0;
+    --border: rgba(0, 0, 0, 0.06);
+    --text-primary: #1a1a1a;
+    --text-secondary: #666;
+  }
+
+  /* ════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════ */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 2rem 0 4rem;
+  }
+
+  .hero-header {
+    width: 100%;
+  }
+
+  .hero-top-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-badge {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .status-badge {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    background: #fef3c7;
+    color: #92400e;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    opacity: 0.7;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+  }
+
+  .tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+  }
+
+  /* ════════════════════════════════════════════
+     METRICS
+     ════════════════════════════════════════════ */
+  .metrics {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    margin-bottom: 2rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .metric { text-align: center; }
+
+  .metric-value {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+  }
+
+  .metric-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  .metric-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border);
+  }
+
+  /* ════════════════════════════════════════════
+     CONTENT SECTIONS
+     ════════════════════════════════════════════ */
+  .content-section {
+    padding: 4rem 0;
+  }
+
+  .section-grey {
+    background: var(--grey-bg);
+    margin: 0 -2rem;
+    padding: 4rem 2rem;
+    border-radius: 16px;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .section-intro {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ════════════════════════════════════════════
+     SECTION 01 — PROBLÈME
+     ════════════════════════════════════════════ */
+  .col-text-full p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    opacity: 0.85;
+    margin-bottom: 1.25rem;
+  }
+
+  .question-block {
+    margin: 2rem 0;
+    padding: 1.25rem 1.5rem;
+    border-left: 3px solid var(--accent);
+    background: rgba(37, 99, 235, 0.06);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #1a1a1a;
+  }
+
+  .challenges-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .challenge {
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #f7f7f8;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .challenge-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .challenge p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* ════════════════════════════════════════════
+     SECTION 02 — CHAÎNE TECHNIQUE
+     ════════════════════════════════════════════ */
+  .chain-grid {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .chain-card {
+    flex: 1;
+    min-width: 180px;
+    max-width: 240px;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .chain-card:hover {
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+  }
+
+  .chain-number {
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    background: var(--accent);
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .chain-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .chain-card h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: #1a1a1a;
+  }
+
+  .chain-component {
+    display: inline-block;
+    font-size: 0.65rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .chain-card p {
+    font-size: 0.75rem;
+    line-height: 1.55;
+    color: #5a5a5a;
+  }
+
+  .chain-arrow {
+    display: flex;
+    align-items: center;
+    color: #999;
+    font-size: 1.25rem;
+    padding: 0 0.5rem;
+  }
+
+  /* ════════════════════════════════════════════
+     SECTION 03 — CYCLE
+     ════════════════════════════════════════════ */
+  .cycle-steps {
+    max-width: 600px;
+  }
+
+  .cycle-step {
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #f7f7f8;
+    position: relative;
+  }
+
+  .cycle-step-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cycle-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .cycle-sleep { background: #94a3b8; }
+  .cycle-wake { background: #f59e0b; }
+  .cycle-measure { background: #2563eb; }
+  .cycle-send { background: #10b981; }
+
+  .cycle-step h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .cycle-step p {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .cycle-duration {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+
+  .cycle-connector {
+    width: 2px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.08);
+    margin: 0 0 0 2rem;
+  }
+
+  /* ════════════════════════════════════════════
+     SECTION 04 — COMPOSANTS
+     ════════════════════════════════════════════ */
+  .components-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .component-card {
+    padding: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.6);
+    transition: all 0.2s;
+  }
+
+  .component-card:hover {
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .component-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .component-card h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+  }
+
+  .component-card p {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: #5a5a5a;
+  }
+
+  /* ════════════════════════════════════════════
+     SECTION 05 — ROADMAP
+     ════════════════════════════════════════════ */
+  .roadmap {
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .roadmap-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .roadmap-item:last-child {
+    border-bottom: none;
+  }
+
+  .roadmap-status {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .roadmap-item.done .roadmap-status {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .roadmap-item.active .roadmap-status {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .roadmap-item.pending .roadmap-status {
+    background: #f3f4f6;
+    color: #9ca3af;
+  }
+
+  .roadmap-content h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .roadmap-item.done .roadmap-content h4 {
+    color: #065f46;
+  }
+
+  .roadmap-item.active .roadmap-content h4 {
+    color: #92400e;
+  }
+
+  .roadmap-item.pending .roadmap-content h4 {
+    color: #9ca3af;
+  }
+
+  .roadmap-content p {
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+  }
+
+  .roadmap-item.pending .roadmap-content p {
+    opacity: 0.5;
+  }
+
+  /* ════════════════════════════════════════════
+     CONCLUSION
+     ════════════════════════════════════════════ */
+  .section-conclusion {
+    padding-bottom: 2rem;
+  }
+
+  .conclusion-box {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 3rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.04), rgba(245, 158, 11, 0.04));
+  }
+
+  .conclusion-box h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
+  }
+
+  .conclusion-box p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+  }
+
+  .conclusion-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ════════════════════════════════════════════
+     PROJECT NAV
+     ════════════════════════════════════════════ */
+  .project-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    margin-top: 1rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .nav-back {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--text-primary); }
+
+  .nav-links {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  /* ════════════════════════════════════════════
+     RESPONSIVE
+     ════════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .challenges-row {
+      grid-template-columns: 1fr;
+    }
+
+    .chain-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .chain-arrow {
+      transform: rotate(90deg);
+      padding: 0.25rem 0;
+    }
+
+    .chain-card {
+      max-width: 100%;
+    }
+
+    .components-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .metrics { gap: 1.25rem; }
+    .metric-divider { display: none; }
+
+    .section-grey {
+      margin: 0 -1rem;
+      padding: 3rem 1rem;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .hero-actions {
+      flex-direction: column;
+    }
+
+    .project-nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

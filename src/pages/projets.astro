@@ -1,35 +1,180 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { projets } from "@/data/projets";
-
-const ALL_PAPERS = projets; // This will be replaced with dynamic data later
 ---
 
 <Layout title="Projets">
-  <div class="prose max-w-none">
-    <h1 class="text-3xl font-bold mb-8">Projets</h1>
+  <div class="projets-page">
+    <div class="projets-header">
+      <h1>Projets</h1>
+      <p class="projets-intro">
+        Des systèmes que j'ai conçus, codés et analysés — de la modélisation
+        écologique aux capteurs embarqués.
+      </p>
+    </div>
 
-    <div class="space-y-8">
-      {projets.map((p) => (
-         <div class="card bg-base-200">
-           <div class="card-body">
-             <h2 class="card-title text-xl">
-               <a href={p.link} class="hover:text-accent">
-                 {p.title}
-               </a>
-             </h2>
-               <p class="text-sm mb-3">{p.date} • {p.tags.join(" • ")}</p>
-               <p class="text-sm text-base-content/80">{p.summary}</p>
-               <div class="card-actions justify-end mt-4">
-                 <a href={p.link} class="btn btn-sm btn-outline border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white">
-                   Voir le projet
-                 </a>
-               </div>
-           </div>
-         </div>
-        ))
-
-      }
+    <div class="projets-list">
+      {projets.map((p, i) => (
+        <a href={p.link} class="projet-card">
+          <div class="projet-card-top">
+            <span class="projet-index">0{i + 1}</span>
+            <span class="projet-context">{p.context}</span>
+          </div>
+          <h2 class="projet-title">{p.title}</h2>
+          <p class="projet-summary">{p.summary}</p>
+          <div class="projet-card-bottom">
+            <div class="projet-tags">
+              {p.tags.map((t) => (
+                <span class="projet-tag">{t}</span>
+              ))}
+            </div>
+            <span class="projet-arrow">→</span>
+          </div>
+        </a>
+      ))}
     </div>
   </div>
 </Layout>
+
+<style>
+  .projets-page {
+    padding: 2rem 0;
+  }
+
+  .projets-header {
+    margin-bottom: 3rem;
+  }
+
+  .projets-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+
+  .projets-intro {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.6;
+  }
+
+  .projets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* ── Card ── */
+  .projet-card {
+    display: block;
+    padding: 1.5rem 1.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    background: #f7f7f8;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s ease;
+    position: relative;
+  }
+
+  .projet-card:hover {
+    border-color: #2563eb;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
+    transform: translateY(-2px);
+  }
+
+  /* Top row: index + context */
+  .projet-card-top {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .projet-index {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #2563eb;
+    letter-spacing: 0.05em;
+  }
+
+  .projet-context {
+    font-size: 0.7rem;
+    color: #999;
+    letter-spacing: 0.02em;
+  }
+
+  /* Title */
+  .projet-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+  }
+
+  .projet-card:hover .projet-title {
+    color: #2563eb;
+  }
+
+  /* Summary */
+  .projet-summary {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Bottom row: tags + arrow */
+  .projet-card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .projet-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .projet-tag {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: #777;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+  }
+
+  .projet-card:hover .projet-tag {
+    border-color: rgba(37, 99, 235, 0.2);
+    color: #2563eb;
+  }
+
+  .projet-arrow {
+    font-size: 1.1rem;
+    color: #ccc;
+    transition: all 0.25s;
+    flex-shrink: 0;
+  }
+
+  .projet-card:hover .projet-arrow {
+    color: #2563eb;
+    transform: translateX(4px);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .projet-card {
+      padding: 1.25rem;
+    }
+
+    .projet-title {
+      font-size: 1.05rem;
+    }
+  }
+</style>
