@@ -32,13 +32,6 @@ const { fullName } = profile
         <SocialIcons />
       </div>
     </div>
-    <div class="hero-photo">
-      <Image
-        src={ProfilePictures}
-        alt={fullName}
-        class="hero-img"
-      />
-    </div>
   </section>
 
   <!-- ═══════════════════════════════════════════ -->
@@ -193,18 +186,6 @@ const { fullName } = profile
   .hero-social {
     display: flex;
     gap: 1rem;
-  }
-
-  .hero-photo {
-    flex-shrink: 0;
-  }
-
-  .hero-img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--border);
   }
 
   /* ════════════════════════════════════════════
@@ -507,7 +488,6 @@ const { fullName } = profile
 
   @media (max-width: 600px) {
     .hero {
-      flex-direction: column-reverse;
       text-align: center;
       gap: 1.5rem;
     }
