@@ -1,63 +1,541 @@
 ---
 import Layout from '../layouts/Layout.astro'
-
 import { profile } from '@/settings'
 import ProfilePictures from '@/assets/profile_pictures.jpg'
-import Hero from '@/components/ui/Hero.astro'
+import { Image } from 'astro:assets'
+import SocialIcons from '@/components/ui/SocialIcons.astro'
+import { projets } from '@/data/projets'
 
-
-const { fullName, title, institute } = profile
-
+const { fullName } = profile
 ---
 
 <Layout>
-	<!-- Hero Section -->
-	<section class='flex items-center gap-12 border-b pb-12'>
-		<Hero
-			fullName={fullName}
-			title={title}
-			institute={institute}
-			profilePicture={ProfilePictures}
-		/>
-	</section>
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  HERO                                       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        Bonjour, je m'appelle <span class="hero-name">{fullName}</span>
+      </h1>
+      <p class="hero-role">Futur ingénieur Data & IoT — ESIEA</p>
+      <p class="hero-accroche">
+        Du hardware au code, je construis ce qui fonctionne.
+        Systèmes embarqués, modélisation, capteurs — je pars du réel
+        et je ne lâche pas tant que ça ne marche pas.
+      </p>
+      <div class="hero-ctas">
+        <a href="/projets" class="btn-primary">Voir mes projets →</a>
+        <a href="/cv" class="btn-outline">Mon CV</a>
+      </div>
+      <div class="hero-social">
+        <SocialIcons />
+      </div>
+    </div>
+    <div class="hero-photo">
+      <Image
+        src={ProfilePictures}
+        alt={fullName}
+        class="hero-img"
+      />
+    </div>
+  </section>
 
-	<!-- 1 -->
-	<section class='py-12 border-b'>
-       <h class='text-4xl font-bold mb-4'>	
-           Titre
-	   </h>
-	   <h1 class='text-lg mb-6'>
-            Contenu
-       </h1>
-	</section>
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  PROJETS PHARES                             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="featured">
+    <div class="featured-header">
+      <h2 class="featured-title">Ce que je construis</h2>
+      <a href="/projets" class="featured-link">Tous les projets →</a>
+    </div>
 
-	<!-- 2 -->
-	<section class='py-12 border-t'>
-       <h class='text-4xl font-bold mb-4'>	
-           Titre
-	   </h>
-	   <h1 class='text-lg mb-6'>
-            Contenu
-       </h1>
-	</section>
+    <div class="featured-grid">
+      {projets.map((p, i) => (
+        <a href={p.link} class="featured-card">
+          <div class="featured-card-top">
+            <span class="featured-index">0{i + 1}</span>
+            <span class="featured-context">{p.context}</span>
+          </div>
+          <h3 class="featured-card-title">{p.title}</h3>
+          <p class="featured-card-summary">{p.summary}</p>
+          <div class="featured-card-bottom">
+            <div class="featured-tags">
+              {p.tags.slice(0, 4).map((t) => (
+                <span class="featured-tag">{t}</span>
+              ))}
+            </div>
+            <span class="featured-arrow">→</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
 
-	<!-- 3 -->
-	<section class='py-12 border-t'>
-       <h class='text-4xl font-bold mb-4'>	
-           Titre
-	   </h>
-	   <h1 class='text-lg mb-6'>
-            Contenu
-       </h1>
-	</section>
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  PROFIL EN 3 BLOCS                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="profile-section">
+    <h2 class="profile-title">Mon profil</h2>
+    <div class="profile-grid">
+      <div class="profile-card">
+        <div class="profile-icon">⚙️</div>
+        <h4>Systèmes embarqués</h4>
+        <p>ESP32, MicroPython, deep sleep, energy harvesting, I²C — du composant au prototype fonctionnel.</p>
+        <div class="profile-skills">
+          <span>ESP32</span>
+          <span>MicroPython</span>
+          <span>C</span>
+        </div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-icon">📊</div>
+        <h4>Data & Modélisation</h4>
+        <p>Simulation numérique, traitement du signal, analyse de données réelles — du modèle à la validation.</p>
+        <div class="profile-skills">
+          <span>Python</span>
+          <span>NumPy</span>
+          <span>SQL</span>
+          <span>Matlab</span>
+        </div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-icon">📡</div>
+        <h4>IoT & Capteurs</h4>
+        <p>Bluetooth Low Energy, accéléromètres, thermoélectricité — des capteurs autonomes pour le monde réel.</p>
+        <div class="profile-skills">
+          <span>BLE</span>
+          <span>BMA400</span>
+          <span>BQ25570</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-	<!-- 4 -->
-	<section class='py-12 border-t'>
-       <h class='text-4xl font-bold mb-4'>	
-           Titre
-	   </h>
-	   <h1 class='text-lg mb-6'>
-            Contenu
-       </h1>
-	</section>
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  CE QUE JE CHERCHE                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="cta-section">
+    <div class="cta-box">
+      <h2>En recherche d'alternance</h2>
+      <p>
+        <strong>3 ans</strong> en rythme 2 semaines / 2 semaines
+        en <strong>Île-de-France</strong>, à partir de septembre 2026.
+        Spécialisation <strong>Data & IA</strong> à l'ESIEA.
+      </p>
+      <div class="cta-actions">
+        <a href="mailto:mchaabnahakim@gmail.com" class="btn-primary">Me contacter →</a>
+        <a href="/approche" class="btn-outline">Mon approche</a>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  /* ════════════════════════════════════════════
+     VARIABLES
+     ════════════════════════════════════════════ */
+  :root {
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: rgba(0, 0, 0, 0.06);
+    --text-secondary: #666;
+  }
+
+  /* ════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════ */
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem 0 4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-text {
+    flex: 1;
+  }
+
+  .hero-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-name {
+    color: var(--accent);
+  }
+
+  .hero-role {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-accroche {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #1a1a1a;
+    margin-bottom: 2rem;
+    max-width: 500px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-social {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .hero-photo {
+    flex-shrink: 0;
+  }
+
+  .hero-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--border);
+  }
+
+  /* ════════════════════════════════════════════
+     BUTTONS
+     ════════════════════════════════════════════ */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+  }
+
+  /* ════════════════════════════════════════════
+     PROJETS PHARES
+     ════════════════════════════════════════════ */
+  .featured {
+    padding: 3.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .featured-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.5rem;
+  }
+
+  .featured-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .featured-link {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s;
+  }
+
+  .featured-link:hover {
+    opacity: 0.7;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .featured-card {
+    display: block;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #f7f7f8;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s ease;
+  }
+
+  .featured-card:hover {
+    border-color: var(--accent);
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .featured-card-top {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .featured-index {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .featured-context {
+    font-size: 0.68rem;
+    color: #999;
+  }
+
+  .featured-card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+  }
+
+  .featured-card:hover .featured-card-title {
+    color: var(--accent);
+  }
+
+  .featured-card-summary {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+  }
+
+  .featured-card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .featured-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .featured-tag {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    color: #777;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .featured-card:hover .featured-tag {
+    border-color: rgba(37, 99, 235, 0.2);
+    color: var(--accent);
+  }
+
+  .featured-arrow {
+    font-size: 1rem;
+    color: #ccc;
+    transition: all 0.25s;
+  }
+
+  .featured-card:hover .featured-arrow {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  /* ════════════════════════════════════════════
+     PROFIL EN 3 BLOCS
+     ════════════════════════════════════════════ */
+  .profile-section {
+    background: #f0f0f0;
+    margin: 0 -2rem;
+    padding: 3.5rem 2rem;
+    border-radius: 16px;
+  }
+
+  .profile-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .profile-card {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    transition: all 0.2s;
+  }
+
+  .profile-card:hover {
+    border-color: rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .profile-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .profile-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .profile-card p {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+  }
+
+  .profile-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .profile-skills span {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ════════════════════════════════════════════
+     CTA — CE QUE JE CHERCHE
+     ════════════════════════════════════════════ */
+  .cta-section {
+    padding: 3.5rem 0 2rem;
+  }
+
+  .cta-box {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 2.5rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.03), rgba(16, 185, 129, 0.03));
+  }
+
+  .cta-box h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  .cta-box p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ════════════════════════════════════════════
+     RESPONSIVE
+     ════════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .profile-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .profile-section {
+      margin: 0 -1rem;
+      padding: 3rem 1rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      flex-direction: column-reverse;
+      text-align: center;
+      gap: 1.5rem;
+    }
+
+    .hero-accroche {
+      max-width: 100%;
+    }
+
+    .hero-ctas {
+      justify-content: center;
+    }
+
+    .hero-social {
+      justify-content: center;
+    }
+
+    .hero-img {
+      width: 150px;
+      height: 150px;
+    }
+
+    .featured-header {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+    }
+  }
+</style>
