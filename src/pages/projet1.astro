@@ -1,56 +1,1153 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 
-const title = 'Projet 1 — Simulation proies-prédateurs'
-const subtitle =
-  "Cycles de population via un modèle discret (grille), visualisations et analyse."
-const tags = ['Python', 'Modélisation', 'Matplotlib']
+const title = 'Simulation proies-prédateurs'
+const subtitle = 'Reproduire 60 ans de dynamique écologique avec des règles simples'
+const tags = ['Python', 'NumPy', 'Matplotlib', 'Modélisation', 'TIPE 2025']
+const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
 ---
 
 <Layout>
-  <section class="mb-12">
-    <h2 class="text-2xl font-bold mb-2">{title}</h2>
-    <p class="opacity-80">{subtitle}</p>
-
-    {tags.length > 0 && (
-      <div class="mt-4 flex flex-wrap gap-2">
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  HERO — Accroche visuelle                  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-header">
+      <span class="hero-badge">{context}</span>
+      <h1 class="hero-title">{title}</h1>
+      <p class="hero-subtitle">{subtitle}</p>
+      <div class="hero-tags">
         {tags.map((t) => (
-          <span class="text-xs px-2 py-1 rounded-full border opacity-80">
-            {t}
-          </span>
+          <span class="tag">{t}</span>
         ))}
       </div>
-    )}
+      <div class="hero-actions">
+        <a href="#probleme" class="btn-primary">Découvrir le projet ↓</a>
+        <a href="https://github.com/TON-GITHUB/proies-predateurs" target="_blank" class="btn-outline">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          Code source
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-gif-wrapper">
+        <img src="/images/projets/proies-predateurs/simulation.gif" alt="Animation de la simulation proies-prédateurs sur grille 50×50" class="hero-gif" />
+        <div class="hero-gif-caption">
+          <span class="dot dot-prey"></span> Orignaux
+          <span class="dot dot-pred"></span> Loups
+          <span class="dot dot-empty"></span> Vide
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="mb-12">
-    <h3 class="text-xl font-bold mb-6 border-b pb-2">Contexte</h3>
-    <p class="leading-relaxed opacity-90">
-      Objectif : observer des cycles proies-prédateurs en imposant des règles
-      locales sur une grille (inspiration “jeu de la vie”), puis analyser les
-      courbes de population.
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  CHIFFRES CLÉS                             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="metrics">
+    <div class="metric">
+      <span class="metric-value">2 500</span>
+      <span class="metric-label">cellules simulées</span>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric">
+      <span class="metric-value">70+</span>
+      <span class="metric-label">générations par simulation</span>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric">
+      <span class="metric-value">60 ans</span>
+      <span class="metric-label">de données réelles (Isle Royale)</span>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric">
+      <span class="metric-value">4</span>
+      <span class="metric-label">phases comportementales</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  LE PROBLÈME                                -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="probleme" class="content-section">
+    <div class="section-label">01 — Le problème</div>
+    <h2 class="section-title">Peut-on reproduire la nature<br/>avec des règles simples ?</h2>
+    <div class="two-col">
+      <div class="col-text">
+        <p>
+          Depuis 1958, les scientifiques observent un phénomène fascinant sur
+          <strong>l'Isle Royale</strong> (Michigan) : les populations de loups
+          et d'orignaux oscillent dans un cycle perpétuel. Quand les proies
+          abondent, les prédateurs prospèrent… puis déciment les proies,
+          entraînant leur propre déclin.
+        </p>
+        <p>
+          Cet écosystème isolé offre des conditions idéales pour étudier ces
+          dynamiques. Ma question : <em>peut-on les reproduire informatiquement
+          à partir de règles locales simples, inspirées du jeu de la vie de
+          Conway ?</em>
+        </p>
+        <blockquote class="question-block">
+          « Dans quelle mesure peut-on reproduire les cycles d'évolution
+          d'un système proies-prédateurs à l'aide d'une simulation
+          informatique ? »
+        </blockquote>
+      </div>
+      <div class="col-visual">
+        <figure class="figure-card">
+          <img src="/images/projets/proies-predateurs/isle-royale-data.png" alt="Évolution des populations à l'Île Royale (1980-2019)" />
+          <figcaption>
+            Données réelles — Isle Royale (1980–2019). Les barres rouges
+            représentent les loups, la courbe bleue les orignaux.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  L'APPROCHE                                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section section-dark">
+    <div class="section-label">02 — L'approche</div>
+    <h2 class="section-title">Un modèle inspiré du jeu de la vie</h2>
+
+    <p class="section-intro">
+      Chaque cellule d'une grille 50×50 peut être <strong>vide</strong>,
+      contenir une <strong>proie</strong> ou un <strong>prédateur</strong>.
+      À chaque génération, des règles locales déterminent l'évolution du système.
     </p>
+
+    <!-- Flowchart des 4 phases -->
+    <div class="phases-grid">
+      <div class="phase-card">
+        <div class="phase-number">1</div>
+        <div class="phase-icon">🎯</div>
+        <h4>Chasse</h4>
+        <p>Le prédateur scanne ses voisins. S'il trouve une proie, il la mange et gagne en santé (+0.1).</p>
+      </div>
+      <div class="phase-arrow">→</div>
+      <div class="phase-card">
+        <div class="phase-number">2</div>
+        <div class="phase-icon">🔄</div>
+        <h4>Déplacement</h4>
+        <p>S'il ne mange pas, le loup se déplace vers une case vide et subit une pénalité santé (−0.25).</p>
+      </div>
+      <div class="phase-arrow">→</div>
+      <div class="phase-card">
+        <div class="phase-number">3</div>
+        <div class="phase-icon">🐺</div>
+        <h4>Reproduction</h4>
+        <p>Si assez de proies mangées, santé suffisante et un peu de chance → nouveau loup (santé 0.8, consanguinité).</p>
+      </div>
+      <div class="phase-arrow">→</div>
+      <div class="phase-card">
+        <div class="phase-number">4</div>
+        <div class="phase-icon">💀</div>
+        <h4>Mortalité</h4>
+        <p>Âge maximal atteint ou santé trop faible (≤ 0.4) → le prédateur meurt.</p>
+      </div>
+    </div>
+
+
+    <!-- Mécanismes intelligents -->
+    <h3 class="subsection-title">Mécanismes adaptatifs</h3>
+    <div class="mechanisms-grid">
+      <div class="mechanism">
+        <div class="mechanism-tag">Survie</div>
+        <h4>Seuil critique</h4>
+        <p>Quand les loups tombent sous 25 individus, un bonus de santé et un seuil de reproduction réduit s'activent pour éviter l'extinction.</p>
+      </div>
+      <div class="mechanism">
+        <div class="mechanism-tag">Génétique</div>
+        <h4>Consanguinité</h4>
+        <p>Les nouveaux loups naissent avec une santé réduite (0.8 au lieu de 1.0), simulant les effets de la consanguinité observés sur l'Isle Royale.</p>
+      </div>
+      <div class="mechanism">
+        <div class="mechanism-tag">Équilibre</div>
+        <h4>Boost proies</h4>
+        <p>Si les prédateurs sont rares, les orignaux bénéficient d'un taux de reproduction augmenté, ce qui relance le cycle naturel.</p>
+      </div>
+    </div>
+        <!-- Schéma complet du cycle -->
+    <div class="schema-wrapper">
+      <figure class="schema-card">
+        <img src="/images/projets/proies-predateurs/schema.jpg" alt="Schéma du cycle proies-prédateurs — boucle update complète" />
+        <figcaption>
+          Vue d'ensemble : le cycle complet des interactions proies ↔ prédateurs avec les conditions de chaque phase.
+        </figcaption>
+      </figure>
+    </div>
+
   </section>
 
-  <section class="mb-12">
-    <h3 class="text-xl font-bold mb-6 border-b pb-2">Ce que j’ai fait</h3>
-    <ul class="list-disc pl-6 space-y-2 opacity-90">
-      <li>Modèle discret sur grille avec règles de reproduction/mortalité</li>
-      <li>Animation GIF et graphiques (loups en barres, orignaux en courbes)</li>
-      <li>Expérimentations sur paramètres pour faire émerger des cycles stables</li>
-    </ul>
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  RÉSULTATS                                  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section">
+    <div class="section-label">03 — Les résultats</div>
+    <h2 class="section-title">La simulation reproduit les cycles réels</h2>
+
+    <div class="comparison">
+      <figure class="comparison-card">
+        <div class="comparison-label">Données réelles</div>
+        <img src="/images/projets/proies-predateurs/isle-royale-data.png" alt="Données réelles Isle Royale" />
+        <figcaption>Isle Royale, 1980–2019</figcaption>
+      </figure>
+      <div class="comparison-vs">VS</div>
+      <figure class="comparison-card">
+        <div class="comparison-label">Ma simulation</div>
+        <img src="/images/projets/proies-predateurs/simulation-graph.png" alt="Graphe de la simulation" />
+        <figcaption>Grille 50×50, 70 générations</figcaption>
+      </figure>
+    </div>
+
+    <div class="results-takeaways">
+      <div class="takeaway">
+        <div class="takeaway-icon">✓</div>
+        <div>
+          <strong>Décalage de phase reproduit</strong>
+          <p>L'augmentation des prédateurs suit celle des proies avec un retard temporel, exactement comme dans les données réelles.</p>
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="takeaway-icon">✓</div>
+        <div>
+          <strong>Oscillations cohérentes</strong>
+          <p>Les fluctuations non périodiques du modèle probabiliste reflètent la variabilité naturelle de l'écosystème.</p>
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="takeaway-icon">✓</div>
+        <div>
+          <strong>Émergence comportementale</strong>
+          <p>Des règles locales simples suffisent à produire un comportement global cohérent avec 60 ans de données réelles.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="mb-12">
-    <h3 class="text-xl font-bold mb-6 border-b pb-2">Résultats</h3>
-    <p class="leading-relaxed opacity-90">
-      Mise en évidence de régimes : extinction, coexistence, oscillations
-      entretenues. Comparaison qualitative des dynamiques obtenues selon les
-      paramètres.
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  GALERIE — Évolution de la grille           -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section section-dark">
+    <div class="section-label">04 — Évolution visuelle</div>
+    <h2 class="section-title">La grille à travers les générations</h2>
+    <p class="section-intro">
+      Chaque image montre un instant de la simulation. On observe l'expansion des proies,
+      suivie de l'explosion des prédateurs, puis l'effondrement et la reprise du cycle.
     </p>
+    <div class="timeline-grid">
+      <div class="timeline-card">
+        <div class="timeline-gen">Gén. 12</div>
+        <img src="/images/projets/proies-predateurs/gen-12.png" alt="Génération 12" />
+        <p>2 042 orignaux · 98 loups<br/><em>Expansion maximale des proies</em></p>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-gen">Gén. 29</div>
+        <img src="/images/projets/proies-predateurs/gen-29.png" alt="Génération 29" />
+        <p>239 orignaux · 122 loups<br/><em>Pic prédateurs, effondrement proies</em></p>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-gen">Gén. 50</div>
+        <img src="/images/projets/proies-predateurs/gen-50.png" alt="Génération 50" />
+        <p>697 orignaux · 12 loups<br/><em>Déclin des loups, reprise du cycle</em></p>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-gen">Gén. 67</div>
+        <img src="/images/projets/proies-predateurs/gen-67.png" alt="Génération 67" />
+        <p>231 orignaux · 38 loups<br/><em>Nouveau cycle en cours</em></p>
+      </div>
+    </div>
   </section>
 
-  <a href="/projets" class="inline-block opacity-80 hover:opacity-100">
-    ← Retour aux projets
-  </a>
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  LIMITES                                    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section">
+    <div class="section-label">05 — Limites & recul</div>
+    <h2 class="section-title">Ce que le modèle ne capture pas</h2>
+
+    <p class="section-intro">
+      Un bon modèle est aussi défini par ce qu'il reconnaît ne pas couvrir.
+      Sur le long terme ou avec des paramètres extrêmes, le système diverge.
+    </p>
+
+    <div class="limits-grid">
+      <div class="limit-card limit-model">
+        <h4>Simplifications</h4>
+        <ul>
+          <li>Pas de saisons ni de variation climatique</li>
+          <li>Pas de migration — l'île est fermée</li>
+          <li>Génétique et maladies peu détaillées</li>
+          <li>Paramètres de simulation fixes</li>
+        </ul>
+      </div>
+      <div class="limit-card limit-collapse">
+        <h4>Cas d'effondrement</h4>
+        <p>
+          Sur 500 générations, les loups finissent par s'éteindre (génération 396 : 22 orignaux, 0 loup).
+          Sur une grille de 100×100, ce sont les orignaux qui disparaissent en premier.
+          <strong>Le modèle ne maintient pas l'équilibre indéfiniment.</strong>
+        </p>
+      </div>
+      <div class="limit-card limit-improve">
+        <h4>Pistes d'amélioration</h4>
+        <ul>
+          <li>Introduction de facteurs environnementaux</li>
+          <li>Reproduction spatialement localisée</li>
+          <li>Répétition de simulations pour moyennage statistique</li>
+          <li>Paramètres adaptatifs au fil des générations</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  CONCLUSION                                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section section-conclusion">
+    <div class="conclusion-box">
+      <h2>Ce que ce projet m'a appris</h2>
+      <p>
+        Ce travail montre qu'il est possible de reproduire <strong>partiellement</strong>
+        les cycles d'un écosystème réel avec un modèle informatique simple.
+        La simulation ne prétend pas remplacer la complexité du vivant —
+        elle permet de <strong>comprendre les mécanismes fondamentaux</strong>
+        qui gouvernent ces dynamiques.
+      </p>
+      <p>
+        Ce projet illustre la puissance de la modélisation numérique comme
+        outil d'analyse des systèmes complexes, et m'a conforté dans
+        mon intérêt pour la <strong>Data Science et l'IA appliquée</strong>
+        à des problèmes concrets.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  FOOTER — Liens                             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <nav class="project-nav">
+    <a href="/projets" class="nav-back">← Retour aux projets</a>
+    <div class="nav-links">
+      <a href="/documents/TIPE-proies-predateurs.pdf" target="_blank" class="btn-outline">
+        📄 PDF complet
+      </a>
+      <a href="https://github.com/TON-GITHUB/proies-predateurs" target="_blank" class="btn-primary">
+        Voir le code source →
+      </a>
+    </div>
+  </nav>
 </Layout>
+
+<style>
+  /* ════════════════════════════════════════════
+     VARIABLES & BASE
+     ════════════════════════════════════════════ */
+  :root {
+    --prey-blue: #7c94bc;
+    --pred-red: #e85d50;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --dark-bg: #f0f0f0;
+    --dark-surface: #f0f0f0;
+    --text-primary: #e8eaed;
+    --text-secondary: #9aa0a6;
+    --border: rgba(255, 255, 255, 0.08);
+  }
+
+  /* ════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════ */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 2rem 0 4rem;
+  }
+
+  .hero-header {
+    width: 100%;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    opacity: 0.7;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+  }
+
+  .tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+  }
+
+  .hero-visual {
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+  .hero-gif-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--dark-surface);
+  }
+
+  .hero-gif {
+    width: 100%;
+    display: block;
+  }
+
+  .hero-gif-caption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+  }
+
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    margin-right: 0.3rem;
+  }
+
+  .dot-prey { background: var(--prey-blue); }
+  .dot-pred { background: var(--pred-red); }
+  .dot-empty { background: #d0d0d0; border: 1px solid rgba(0, 0, 0, 0.1); }
+
+  /* ════════════════════════════════════════════
+     METRICS
+     ════════════════════════════════════════════ */
+  .metrics {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    margin-bottom: 2rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .metric {
+    text-align: center;
+  }
+
+  .metric-value {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+  }
+
+  .metric-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  .metric-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border);
+  }
+
+  /* ════════════════════════════════════════════
+     CONTENT SECTIONS
+     ════════════════════════════════════════════ */
+  .content-section {
+    padding: 4rem 0;
+  }
+
+  .section-dark {
+    background: var(--dark-surface);
+    margin: 0 -2rem;
+    padding: 4rem 2rem;
+    border-radius: 16px;
+    color: #1a1a1a;
+  }
+
+  /* Force readability in dark sections */
+  .section-dark .section-intro,
+  .section-dark p,
+  .section-dark li {
+    color: #4a4a4a;
+  }
+
+  .section-dark .section-title,
+  .section-dark h2,
+  .section-dark h3,
+  .section-dark h4,
+  .section-dark strong {
+    color: #1a1a1a;
+  }
+
+  .section-dark .subsection-title {
+    color: #1a1a1a;
+    border-top-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .section-intro {
+    font-size: 1rem;
+    line-height: 1.7;
+    opacity: 0.8;
+    max-width: 700px;
+    margin-bottom: 2.5rem;
+  }
+
+  .subsection-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 3rem 0 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ════════════════════════════════════════════
+     TWO-COL LAYOUT
+     ════════════════════════════════════════════ */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .col-text p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    opacity: 0.85;
+    margin-bottom: 1.25rem;
+  }
+
+  .question-block {
+    margin: 2rem 0 0;
+    padding: 1.25rem 1.5rem;
+    border-left: 3px solid var(--accent);
+    background: rgba(37, 99, 235, 0.06);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #1a1a1a;
+  }
+
+  .figure-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--dark-surface);
+  }
+
+  .figure-card img {
+    width: 100%;
+    display: block;
+  }
+
+  .figure-card figcaption {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    line-height: 1.5;
+  }
+
+  /* ════════════════════════════════════════════
+     PHASES FLOWCHART
+     ════════════════════════════════════════════ */
+  .phases-grid {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .phase-card {
+    flex: 1;
+    min-width: 180px;
+    max-width: 240px;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .phase-card:hover {
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+  }
+
+  .phase-number {
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    background: var(--accent);
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .phase-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .phase-card h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+  }
+
+  .phase-card p {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: #5a5a5a;
+  }
+
+  .phase-arrow {
+    display: flex;
+    align-items: center;
+    color: #999;
+    font-size: 1.25rem;
+    padding: 0 0.5rem;
+  }
+
+  /* ════════════════════════════════════════════
+     SCHEMA
+     ════════════════════════════════════════════ */
+  .schema-wrapper {
+    max-width: 820px;
+    margin: 2.5rem auto 1rem;
+  }
+
+  .schema-card {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .schema-card img {
+    width: 100%;
+    display: block;
+    padding: 1.5rem;
+  }
+
+  .schema-card figcaption {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.78rem;
+    color: #5a5a5a;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    line-height: 1.5;
+    background: var(--dark-surface);
+  }
+
+  /* ════════════════════════════════════════════
+     MECHANISMS
+     ════════════════════════════════════════════ */
+  .mechanisms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .mechanism {
+    padding: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.6);
+    transition: all 0.2s;
+  }
+
+  .mechanism:hover {
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .mechanism-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pred-red);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .mechanism h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+  }
+
+  .mechanism p {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: #5a5a5a;
+  }
+
+  /* ════════════════════════════════════════════
+     COMPARISON
+     ════════════════════════════════════════════ */
+  .comparison {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .comparison-card {
+    flex: 1;
+    min-width: 280px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--dark-surface);
+    position: relative;
+  }
+
+  .comparison-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--accent);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    z-index: 1;
+  }
+
+  .comparison-card img {
+    width: 100%;
+    display: block;
+  }
+
+  .comparison-card figcaption {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .comparison-vs {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+    opacity: 0.4;
+  }
+
+  /* ════════════════════════════════════════════
+     TAKEAWAYS
+     ════════════════════════════════════════════ */
+  .results-takeaways {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .takeaway {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: all 0.2s;
+  }
+
+  .takeaway:hover {
+    border-color: rgba(37, 99, 235, 0.3);
+    background: rgba(37, 99, 235, 0.03);
+  }
+
+  .takeaway-icon {
+    color: #34d399;
+    font-size: 1.1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .takeaway strong {
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .takeaway p {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    opacity: 0.7;
+    margin: 0;
+  }
+
+  /* ════════════════════════════════════════════
+     TIMELINE GRID
+     ════════════════════════════════════════════ */
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .timeline-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s;
+  }
+
+  .timeline-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+
+  .timeline-gen {
+    padding: 0.5rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .timeline-card img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .timeline-card p {
+    padding: 0.75rem 1rem;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: #4a4a4a;
+  }
+
+  .timeline-card em {
+    color: #1a1a1a;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* ════════════════════════════════════════════
+     LIMITS
+     ════════════════════════════════════════════ */
+  .limits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .limit-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .limit-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #1a1a1a;
+  }
+
+  .limit-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .limit-card li {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: #5a5a5a;
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 0.4rem;
+  }
+
+  .limit-card li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #999;
+  }
+
+  .limit-card p {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: #5a5a5a;
+  }
+
+  .limit-card strong {
+    color: #1a1a1a;
+  }
+
+  .limit-model { border-left: 3px solid var(--prey-blue); }
+  .limit-collapse { border-left: 3px solid var(--pred-red); }
+  .limit-improve { border-left: 3px solid #34d399; }
+
+  /* ════════════════════════════════════════════
+     CONCLUSION
+     ════════════════════════════════════════════ */
+  .section-conclusion {
+    padding-bottom: 2rem;
+  }
+
+  .conclusion-box {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 3rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.04), rgba(232, 93, 80, 0.04));
+  }
+
+  .conclusion-box h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
+  }
+
+  .conclusion-box p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+  }
+
+  .conclusion-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ════════════════════════════════════════════
+     PROJECT NAV
+     ════════════════════════════════════════════ */
+  .project-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    margin-top: 1rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .nav-back {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  /* ════════════════════════════════════════════
+     RESPONSIVE
+     ════════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+
+    .phases-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .phase-arrow {
+      transform: rotate(90deg);
+      padding: 0.25rem 0;
+    }
+
+    .phase-card {
+      max-width: 100%;
+    }
+
+    .mechanisms-grid,
+    .limits-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .timeline-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .comparison {
+      flex-direction: column;
+    }
+
+    .comparison-vs {
+      display: none;
+    }
+
+    .metrics {
+      gap: 1.25rem;
+    }
+
+    .metric-divider {
+      display: none;
+    }
+
+    .section-dark {
+      margin: 0 -1rem;
+      padding: 3rem 1rem;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .timeline-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+    }
+
+    .project-nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
