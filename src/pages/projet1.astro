@@ -107,10 +107,52 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   </section>
 
   <!-- ═══════════════════════════════════════════ -->
-  <!--  L'APPROCHE                                 -->
+  <!--  LA DÉMARCHE                                -->
   <!-- ═══════════════════════════════════════════ -->
   <section class="content-section section-dark">
-    <div class="section-label">02 — L'approche</div>
+    <div class="section-label">02 — Le parti pris</div>
+    <h2 class="section-title">Traduire le réel, pas les équations</h2>
+
+    <div class="partipris-grid">
+      <div class="partipris-card">
+        <div class="partipris-icon">🚫</div>
+        <h4>Pas de Lotka-Volterra</h4>
+        <p>
+          Le modèle classique proies-prédateurs existe depuis 1926. Je l'ai volontairement
+          écarté pour tester une autre hypothèse : <strong>est-ce que la simple traduction
+          des comportements observés dans la réalité suffit à produire des dynamiques
+          cohérentes ?</strong> Pas d'équations différentielles — juste de la logique
+          locale tirée de l'observation.
+        </p>
+      </div>
+      <div class="partipris-card">
+        <div class="partipris-icon">🔧</div>
+        <h4>Des outils fondamentaux</h4>
+        <p>
+          Le code repose volontairement sur des <strong>structures basiques de Python</strong> :
+          boucles, matrices sous forme de listes, conditions. Pas de framework de simulation,
+          pas de librairie spécialisée. Chaque mécanisme est codé à la main pour maîtriser
+          chaque rouage du système — et rester dans le cadre de la prépa.
+        </p>
+      </div>
+      <div class="partipris-card">
+        <div class="partipris-icon">🎯</div>
+        <h4>Mon propre jeu de la vie</h4>
+        <p>
+          L'objectif n'était pas de reproduire le Game of Life de Conway, mais de
+          <strong>créer mes propres règles</strong> en partant d'une analyse concrète :
+          pourquoi un loup chasse, comment il se déplace, quand il meurt. Chaque règle
+          traduit un comportement réel, pas une abstraction mathématique.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  L'APPROCHE                                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section">
+    <div class="section-label">03 — L'approche</div>
     <h2 class="section-title">Un modèle inspiré du jeu de la vie</h2>
 
     <p class="section-intro">
@@ -186,7 +228,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   <!--  RÉSULTATS                                  -->
   <!-- ═══════════════════════════════════════════ -->
   <section class="content-section">
-    <div class="section-label">03 — Les résultats</div>
+    <div class="section-label">04 — Les résultats</div>
     <h2 class="section-title">La simulation reproduit les cycles réels</h2>
 
     <div class="comparison">
@@ -232,7 +274,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   <!--  GALERIE — Évolution de la grille           -->
   <!-- ═══════════════════════════════════════════ -->
   <section class="content-section section-dark">
-    <div class="section-label">04 — Évolution visuelle</div>
+    <div class="section-label">05 — Évolution visuelle</div>
     <h2 class="section-title">La grille à travers les générations</h2>
     <p class="section-intro">
       Chaque image montre un instant de la simulation. On observe l'expansion des proies,
@@ -266,7 +308,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   <!--  LIMITES                                    -->
   <!-- ═══════════════════════════════════════════ -->
   <section class="content-section">
-    <div class="section-label">05 — Limites & recul</div>
+    <div class="section-label">06 — Limites & recul</div>
     <h2 class="section-title">Ce que le modèle ne capture pas</h2>
 
     <p class="section-intro">
@@ -301,6 +343,44 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
           <li>Paramètres adaptatifs au fil des générations</li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  ET ENSUITE ?                               -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section section-dark">
+    <div class="section-label">07 — Et ensuite ?</div>
+    <h2 class="section-title">Vers une simulation qui s'améliore d'elle-même</h2>
+
+    <div class="next-content">
+      <p>
+        Le modèle actuel repose sur des paramètres fixés à la main : taux de reproduction,
+        seuils de santé, pénalités. Ces choix fonctionnent, mais ils sont le fruit
+        de mon intuition et de mes essais — pas d'une optimisation rigoureuse.
+      </p>
+      <p>
+        Je travaille actuellement sur l'intégration d'un <strong>algorithme génétique</strong>
+        pour calibrer automatiquement ces paramètres. Le principe : générer des centaines
+        de simulations avec des configurations différentes, évaluer leur proximité avec
+        les données réelles de l'Isle Royale, et faire "survivre" les meilleures
+        configurations — génération après génération.
+      </p>
+
+      <div class="next-highlight">
+        <div class="next-highlight-icon">🧬</div>
+        <div>
+          <strong>L'idée :</strong> appliquer la logique de la sélection naturelle
+          non plus aux loups et aux orignaux, mais aux paramètres de la simulation
+          elle-même. Faire évoluer le modèle pour qu'il apprenne à reproduire le réel.
+        </div>
+      </div>
+
+      <p>
+        C'est une transition naturelle vers le <strong>machine learning</strong> :
+        passer d'un modèle conçu manuellement à un modèle qui s'optimise par les données.
+        Et c'est exactement la direction de ma spécialisation en Data & IA.
+      </p>
     </div>
   </section>
 
@@ -1017,6 +1097,85 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   .limit-improve { border-left: 3px solid #34d399; }
 
   /* ════════════════════════════════════════════
+     PARTI PRIS
+     ════════════════════════════════════════════ */
+  .partipris-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .partipris-card {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    transition: all 0.2s;
+  }
+
+  .partipris-card:hover {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .partipris-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .partipris-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+  }
+
+  .partipris-card p {
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: #1a1a1a;
+  }
+
+  /* ════════════════════════════════════════════
+     ET ENSUITE
+     ════════════════════════════════════════════ */
+  .next-content {
+    max-width: 650px;
+  }
+
+  .next-content p {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: #1a1a1a;
+    margin-bottom: 1.25rem;
+  }
+
+  .next-highlight {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    margin: 1.5rem 0;
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: #1a1a1a;
+  }
+
+  .next-highlight-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .next-highlight strong {
+    color: var(--accent);
+  }
+
+  /* ════════════════════════════════════════════
      CONCLUSION
      ════════════════════════════════════════════ */
   .section-conclusion {
@@ -1102,7 +1261,8 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
     }
 
     .mechanisms-grid,
-    .limits-grid {
+    .limits-grid,
+    .partipris-grid {
       grid-template-columns: 1fr;
     }
 

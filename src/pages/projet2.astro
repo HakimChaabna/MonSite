@@ -247,10 +247,87 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   </section>
 
   <!-- ═══════════════════════════════════════════ -->
-  <!--  AVANCEMENT                                 -->
+  <!--  DE LA DONNÉE À LA PRÉDICTION               -->
   <!-- ═══════════════════════════════════════════ -->
   <section class="content-section">
-    <div class="section-label">05 — Avancement</div>
+    <div class="section-label">05 — De la donnée à la prédiction</div>
+    <h2 class="section-title">Construire une intelligence<br/>à partir des vibrations</h2>
+
+    <p class="section-intro">
+      Le capteur ne se contente pas de mesurer — il alimente un pipeline de données
+      conçu pour apprendre à détecter les anomalies et anticiper les pannes.
+    </p>
+
+    <div class="data-flow">
+      <div class="data-step">
+        <div class="data-step-num">1</div>
+        <div class="data-step-content">
+          <h4>Collecte structurée</h4>
+          <p>
+            À chaque cycle, le capteur transmet via BLE un paquet de données :
+            <strong>accélération 3 axes</strong> (X, Y, Z), <strong>valeur RMS</strong>,
+            horodatage et identifiant du capteur. Ces trames sont réceptionnées
+            et stockées dans une base de données pour constituer un historique.
+          </p>
+        </div>
+      </div>
+      <div class="data-connector"></div>
+      <div class="data-step">
+        <div class="data-step-num">2</div>
+        <div class="data-step-content">
+          <h4>Construction de la base de données</h4>
+          <p>
+            Chaque enregistrement enrichit une base qui trace l'évolution vibratoire
+            de la machine dans le temps. On accumule des <strong>signatures vibratoires</strong> :
+            amplitudes, fréquences dominantes, tendances sur plusieurs cycles.
+            C'est cette profondeur temporelle qui rend la prédiction possible.
+          </p>
+        </div>
+      </div>
+      <div class="data-connector"></div>
+      <div class="data-step">
+        <div class="data-step-num">3</div>
+        <div class="data-step-content">
+          <h4>Détection d'anomalies</h4>
+          <p>
+            À partir de cet historique, un <strong>modèle de machine learning</strong>
+            apprend à distinguer le fonctionnement normal de la machine de ses
+            comportements anormaux. Variations d'amplitude inhabituelles, changements
+            fréquentiels, dérives progressives — autant de signaux avant-coureurs
+            de panne détectables automatiquement.
+          </p>
+        </div>
+      </div>
+      <div class="data-connector"></div>
+      <div class="data-step">
+        <div class="data-step-num">4</div>
+        <div class="data-step-content">
+          <h4>Maintenance prédictive autonome</h4>
+          <p>
+            L'objectif final : un système qui <strong>apprend en continu</strong>
+            à partir de ses propres mesures, affine ses seuils d'alerte
+            et anticipe les défaillances avant qu'elles ne surviennent —
+            le tout sans intervention humaine ni source d'énergie externe.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="data-highlight">
+      <div class="data-highlight-icon">📊</div>
+      <div>
+        <strong>Le lien avec ma spécialisation :</strong> ce projet illustre la boucle
+        complète capteur → donnée → apprentissage → décision. C'est exactement
+        l'intersection entre IoT et Data Science sur laquelle je veux me spécialiser.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  AVANCEMENT                                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="content-section section-grey">
+    <div class="section-label">06 — Avancement</div>
     <h2 class="section-title">Où en est le projet ?</h2>
     <p class="section-intro">
       Ce projet est actuellement en phase de conception et d'assemblage.
@@ -804,7 +881,84 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   }
 
   /* ════════════════════════════════════════════
-     SECTION 05 — ROADMAP
+     SECTION 05 — DATA PIPELINE
+     ════════════════════════════════════════════ */
+  .data-flow {
+    max-width: 620px;
+    margin-bottom: 2rem;
+  }
+
+  .data-step {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #f7f7f8;
+    align-items: flex-start;
+  }
+
+  .data-step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .data-step-content h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .data-step-content p {
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: #1a1a1a;
+  }
+
+  .data-connector {
+    width: 2px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.08);
+    margin: 0 0 0 2.5rem;
+  }
+
+  .data-highlight {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+    background: rgba(37, 99, 235, 0.04);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    max-width: 620px;
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: #1a1a1a;
+  }
+
+  .data-highlight-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .data-highlight strong {
+    color: var(--accent);
+  }
+
+  /* ════════════════════════════════════════════
+     SECTION 06 — ROADMAP
      ════════════════════════════════════════════ */
   .roadmap {
     max-width: 650px;
