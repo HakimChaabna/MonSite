@@ -1,8 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { profile } from '@/settings'
-import ProfilePictures from '@/assets/profile_pictures.jpg'
-import { Image } from 'astro:assets'
 import SocialIcons from '@/components/ui/SocialIcons.astro'
 import { projets } from '@/data/projets'
 
@@ -30,6 +28,30 @@ const { fullName } = profile
       </div>
       <div class="hero-social">
         <SocialIcons />
+      </div>
+    </div>
+    <div class="hero-stats-rotator">
+      <div class="rotator-track">
+        <div class="rotator-item">
+          <span class="rotator-value">2</span>
+          <span class="rotator-label">projets TIPE</span>
+        </div>
+        <div class="rotator-item">
+          <span class="rotator-value">47</span>
+          <span class="rotator-label">itérations sur le capteur</span>
+        </div>
+        <div class="rotator-item">
+          <span class="rotator-value">0</span>
+          <span class="rotator-label">batterie nécessaire</span>
+        </div>
+        <div class="rotator-item">
+          <span class="rotator-value">10+</span>
+          <span class="rotator-label">technologies maîtrisées</span>
+        </div>
+        <div class="rotator-item">
+          <span class="rotator-value">∞</span>
+          <span class="rotator-label">curiosité</span>
+        </div>
       </div>
     </div>
   </section>
@@ -173,7 +195,7 @@ const { fullName } = profile
     line-height: 1.7;
     color: #1a1a1a;
     margin-bottom: 2rem;
-    max-width: 500px;
+    max-width: 700px;
   }
 
   .hero-ctas {
@@ -186,6 +208,64 @@ const { fullName } = profile
   .hero-social {
     display: flex;
     gap: 1rem;
+  }
+
+  .hero-stats-rotator {
+    flex-shrink: 0;
+    width: 180px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .rotator-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .rotator-item {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: rotator-fade 15s infinite;
+  }
+
+  .rotator-item:nth-child(1) { animation-delay: 0s; }
+  .rotator-item:nth-child(2) { animation-delay: 3s; }
+  .rotator-item:nth-child(3) { animation-delay: 6s; }
+  .rotator-item:nth-child(4) { animation-delay: 9s; }
+  .rotator-item:nth-child(5) { animation-delay: 12s; }
+
+  @keyframes rotator-fade {
+    0%    { opacity: 0; transform: translateY(12px); }
+    5%    { opacity: 1; transform: translateY(0); }
+    17%   { opacity: 1; transform: translateY(0); }
+    22%   { opacity: 0; transform: translateY(-12px); }
+    100%  { opacity: 0; }
+  }
+
+  .rotator-value {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .rotator-label {
+    font-size: 0.78rem;
+    color: #999;
+    margin-top: 0.4rem;
+    text-align: center;
+    letter-spacing: 0.02em;
   }
 
   /* ════════════════════════════════════════════
@@ -488,8 +568,9 @@ const { fullName } = profile
 
   @media (max-width: 600px) {
     .hero {
+      flex-direction: column;
       text-align: center;
-      gap: 1.5rem;
+      gap: 2rem;
     }
 
     .hero-accroche {
@@ -504,9 +585,14 @@ const { fullName } = profile
       justify-content: center;
     }
 
-    .hero-img {
-      width: 150px;
-      height: 150px;
+    .hero-stats-rotator {
+      width: 140px;
+      height: 90px;
+      margin: 0 auto;
+    }
+
+    .rotator-value {
+      font-size: 2.5rem;
     }
 
     .featured-header {
