@@ -4,7 +4,7 @@ import Layout from '@/layouts/Layout.astro'
 const title = 'Simulation proies-prédateurs'
 const subtitle = 'Reproduire 60 ans de dynamique écologique avec des règles simples'
 const tags = ['Python', 'NumPy', 'Matplotlib', 'Modélisation', 'TIPE 2025']
-const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
+const context = 'Prépa MPSI · Lycée Saint-Rémi · 2025'
 ---
 
 <Layout>
@@ -121,7 +121,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
           Le modèle classique proies-prédateurs existe depuis 1926. Je l'ai volontairement
           écarté pour tester une autre hypothèse : <strong>est-ce que la simple traduction
           des comportements observés dans la réalité suffit à produire des dynamiques
-          cohérentes ?</strong> Pas d'équations différentielles — juste de la logique
+          cohérentes ?</strong> Pas d'équations différentielles. Juste de la logique
           locale tirée de l'observation.
         </p>
       </div>
@@ -132,7 +132,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
           Le code repose volontairement sur des <strong>structures basiques de Python</strong> :
           boucles, matrices sous forme de listes, conditions. Pas de framework de simulation,
           pas de librairie spécialisée. Chaque mécanisme est codé à la main pour maîtriser
-          chaque rouage du système — et rester dans le cadre de la prépa.
+          chaque rouage du système, et rester dans le cadre de la prépa.
         </p>
       </div>
       <div class="partipris-card">
@@ -158,7 +158,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
     <p class="section-intro">
       Chaque cellule d'une grille 50×50 peut être <strong>vide</strong>,
       contenir une <strong>proie</strong> ou un <strong>prédateur</strong>.
-      À chaque génération, des règles locales déterminent l'évolution du système.
+      À chaque génération, des règles locales déterminent l'évolution du système. Exemple : comportement des loups ↓
     </p>
 
     <!-- Flowchart des 4 phases -->
@@ -167,28 +167,28 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
         <div class="phase-number">1</div>
         <div class="phase-icon">🎯</div>
         <h4>Chasse</h4>
-        <p>Le prédateur scanne ses voisins. S'il trouve une proie, il la mange et gagne en santé (+0.1).</p>
+        <p>Le prédateur scanne ses voisins. S'il trouve une proie, il la mange et gagne en santé.</p>
       </div>
       <div class="phase-arrow">→</div>
       <div class="phase-card">
         <div class="phase-number">2</div>
         <div class="phase-icon">🔄</div>
         <h4>Déplacement</h4>
-        <p>S'il ne mange pas, le loup se déplace vers une case vide et subit une pénalité santé (−0.25).</p>
+        <p>S'il ne mange pas, le loup se déplace vers une case vide et subit une pénalité santé.</p>
       </div>
       <div class="phase-arrow">→</div>
       <div class="phase-card">
         <div class="phase-number">3</div>
         <div class="phase-icon">🐺</div>
         <h4>Reproduction</h4>
-        <p>Si assez de proies mangées, santé suffisante et un peu de chance → nouveau loup (santé 0.8, consanguinité).</p>
+        <p>Si assez de proies mangées, santé suffisante et un peu de chance → nouveau loup.</p>
       </div>
       <div class="phase-arrow">→</div>
       <div class="phase-card">
         <div class="phase-number">4</div>
         <div class="phase-icon">💀</div>
         <h4>Mortalité</h4>
-        <p>Âge maximal atteint ou santé trop faible (≤ 0.4) → le prédateur meurt.</p>
+        <p>Âge maximal atteint ou santé trop faible → le prédateur meurt.</p>
       </div>
     </div>
 
