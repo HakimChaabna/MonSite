@@ -1,74 +1,774 @@
 ---
 import Layout from '@/layouts/Layout.astro'
-import { experiences, education, skills } from '../data/cv'
-import CvTimeline from '@/components/ui/CvTimeline.astro'
+import type { Experience, Education } from '@/types/cv'
 
-import type { Experience, Education } from '../types/cv'
-import List from '@/components/ui/List.astro'
+const formations: Education[] = [
+  {
+    school: '',
+    time: '2026 – 2029',
+    degree: 'Cycle ingénieur du numérique',
+    description: 'ESIEA, Paris-Ivry',
+    location: 'Formation d\'ingénieur généraliste orientée numérique : cybersécurité, IA et systèmes embarqués.',
+  },
+  {
+    school: '',
+    time: '2024 – 2026',
+    degree: 'Classe préparatoire MP',
+    description: 'Lycée Saint-Rémi, Roubaix',
+    location: 'Approfondissement en mathématiques, physique et informatique, développement de rigueur scientifique.',
+  },
+  {
+    school: '',
+    time: '2022 – 2024',
+    degree: 'Formation Préparatoire en Sciences et Techniques',
+    description: 'ESSA Tlemcen, Algérie',
+    location: 'Formation pluridisciplinaire : physique appliquée, électronique, ingénierie.',
+  },
+  {
+    school: '',
+    time: '2022',
+    degree: 'Baccalauréat scientifique',
+    description: 'Mention bien',
+    location: '',
+  },
+]
 
-let orderedExperiences: Experience[] = []
-let orderedEducations: Education[] = []
-
-const orderElement = <T extends { time: string }>(a: T, b: T) => {
-  const presentValues = ['present', 'now', 'current', 'today']
-  if (
-			presentValues.includes(
-				(a['time'] as string)?.split(' - ')[1]?.toLowerCase()
-			)
-		) {
-			// If the date is 'present', it should be the first element
-			return -1
-		}
-		const dateA = new Date((a['time'] as string)?.split(' - ')[1])
-		const dateB = new Date((b['time'] as string)?.split(' - ')[1])
-		return dateB.getTime() - dateA.getTime()
-}
-
-if (experiences.length > 0) {
-	orderedExperiences = experiences.sort((a, b) => {
-		return orderElement(a, b)
-	})
-}
-
-if (education.length > 0) {
-	orderedEducations = education.sort((a, b) => {
-		return orderElement(a, b)
-	})
-}
-
-
+const experiences: Experience[] = [
+  {
+    company: '',
+    time: 'Étés 2024 & 2025',
+    title: 'Employé polyvalent — vente & logistique (boulangerie)',
+    description: 'Gestion de la relation client et des opérations de vente. Organisation autonome de tournées de livraison en utilitaire. Respect des délais, des contraintes logistiques et des procédures.',
+    location: '',
+  },
+]
 ---
 
-<Layout>
-	{
-		orderedEducations.length > 0 && (
-			<section class='mb-12'>
-				<h2 class='text-2xl font-bold mb-6 border-b pb-2'>
-					Formations
-				</h2>
-				<CvTimeline elements={orderedEducations} colored={true} />
-			</section>
-		)
-	}
+<Layout title="CV">
 
-	{
-		orderedExperiences.length > 0 && (
-			<section class='mb-12'>
-				<h2 class='text-2xl font-bold mb-6 border-b pb-2'>
-					Experiences
-				</h2>
-				<CvTimeline elements={orderedExperiences} colored={true} />
-			</section>
-		)
-	}
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  EN-TÊTE                                    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="cv-header">
+    <h1 class="cv-name">Hakim Chaabna</h1>
+    <p class="cv-role">Apprenti-ingénieur — Data, IoT & Systèmes Intelligents</p>
+    <p class="cv-meta">Recherche d'alternance · Septembre 2026 · Rythme 2/2 · Île-de-France</p>
+  </section>
 
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  PROFIL                                     -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Profil</h2>
+    <p class="cv-text">
+      Orientation systèmes intelligents et calcul scientifique, avec une solide base
+      en mathématiques, informatique et modélisation de systèmes. Intérêt marqué pour
+      la conception de systèmes embarqués basse consommation, l'automatisation de processus
+      et l'optimisation de systèmes complexes alliant hardware et software.
+    </p>
+  </section>
 
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  FORMATIONS                                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Formations</h2>
+    <div class="timeline">
+      {formations.map((el) => (
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-time">{el.time}</span>
+            <h3 class="timeline-title">{el.degree}</h3>
+            {el.description && <p class="timeline-place">{el.description}</p>}
+            {el.location && <p class="timeline-desc">{el.location}</p>}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
 
-	{
-		skills.length > 0 && (
-			<section class='mb-12'>
-				<List listTitle='Skills' listItems={skills}/>
-			</section>
-		)
-	}
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  PROJETS                                    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Projets</h2>
+    <div class="cv-cards">
+
+      <a href="/projet2" class="cv-card">
+        <div class="cv-card-header">
+          <h3 class="cv-card-title">Conception d'un capteur autonome pour la maintenance prédictive</h3>
+          <span class="cv-card-date">en cours</span>
+        </div>
+        <p class="cv-card-desc">
+          Étude d'un système embarqué auto-alimenté par thermoélectricité pour analyser
+          les vibrations d'une machine et anticiper les pannes. Chaîne complète :
+          TEG → BQ25570 → supercondensateur → ESP32 → BMA400 → BLE.
+        </p>
+        <div class="cv-tags">
+          <span>ESP32</span>
+          <span>MicroPython</span>
+          <span>Low-power design</span>
+          <span>BLE</span>
+          <span>BQ25570</span>
+        </div>
+        <span class="cv-card-arrow">→</span>
+      </a>
+
+      <a href="/projet1" class="cv-card">
+        <div class="cv-card-header">
+          <h3 class="cv-card-title">Simulation Python de dynamiques proies-prédateurs</h3>
+          <span class="cv-card-date">2025</span>
+        </div>
+        <p class="cv-card-desc">
+          Modélisation d'un écosystème sur grille inspirée du jeu de la vie.
+          Règles comportementales tirées de l'observation du réel.
+          Comparaison avec 60 ans de données de l'Isle Royale.
+        </p>
+        <div class="cv-tags">
+          <span>Python</span>
+          <span>Simulation numérique</span>
+          <span>Visualisation</span>
+          <span>Algorithme génétique</span>
+        </div>
+        <span class="cv-card-arrow">→</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  EXPÉRIENCE                                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Expérience</h2>
+    <div class="timeline">
+      {experiences.map((el) => (
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-time">{el.time}</span>
+            <h3 class="timeline-title">{el.title}</h3>
+            {el.description && <p class="timeline-desc">{el.description}</p>}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  COMPÉTENCES                                -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Compétences</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h4 class="skill-group-label">Programmation</h4>
+        <div class="skill-pills">
+          <span>Python</span><span>C</span><span>SQL</span><span>Matlab</span><span>OCaml</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4 class="skill-group-label">IoT & Embarqué</h4>
+        <div class="skill-pills">
+          <span>ESP32</span><span>Arduino</span><span>MicroPython</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4 class="skill-group-label">Automatisation & Outils</h4>
+        <div class="skill-pills">
+          <span>Git</span><span>n8n</span><span>Airtable</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4 class="skill-group-label">CAO / DAO</h4>
+        <div class="skill-pills">
+          <span>AutoCAD</span><span>SolidWorks</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  SAVOIR-ÊTRE                                -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Savoir-être</h2>
+    <div class="soft-grid">
+      <div class="soft-card">
+        <span class="soft-icon">🧭</span>
+        <div>
+          <h4 class="soft-label">Autonomie</h4>
+          <p class="soft-desc">Capable de mener un projet de bout en bout sans supervision — de la recherche à la réalisation.</p>
+        </div>
+      </div>
+      <div class="soft-card">
+        <span class="soft-icon">🔁</span>
+        <div>
+          <h4 class="soft-label">Persévérance</h4>
+          <p class="soft-desc">47 itérations sur le capteur embarqué. Je ne lâche pas tant que ça ne marche pas.</p>
+        </div>
+      </div>
+      <div class="soft-card">
+        <span class="soft-icon">🔍</span>
+        <div>
+          <h4 class="soft-label">Esprit critique</h4>
+          <p class="soft-desc">Je questionne chaque choix technique. Si les résultats ne collent pas, je cherche pourquoi.</p>
+        </div>
+      </div>
+      <div class="soft-card">
+        <span class="soft-icon">🤝</span>
+        <div>
+          <h4 class="soft-label">Esprit d'équipe</h4>
+          <p class="soft-desc">Expérience terrain en boulangerie : coordination livraisons, gestion client, respect des délais.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  LANGUES + CENTRES D'INTÉRÊT               -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="cv-section">
+    <div class="two-cols">
+      <div>
+        <h2 class="cv-section-title">Langues</h2>
+        <div class="langues-list">
+          <div class="langue-row">
+            <span class="langue-name">Arabe</span>
+            <span class="langue-level">Natif</span>
+          </div>
+          <div class="langue-row">
+            <span class="langue-name">Français</span>
+            <span class="langue-level">Courant</span>
+          </div>
+          <div class="langue-row">
+            <span class="langue-name">Anglais</span>
+            <span class="langue-level">Intermédiaire avancé</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2 class="cv-section-title">Centres d'intérêt</h2>
+        <div class="interest-pills">
+          <span>Systèmes embarqués & IoT</span>
+          <span>Transition énergétique</span>
+          <span>Automatisation & workflows</span>
+          <span>Mobilité intelligente</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  CTA                                        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="cta-section">
+    <div class="cta-box">
+      <h2>Intéressé par mon profil ?</h2>
+      <p>
+        Je recherche une <strong>alternance de 3 ans</strong> en rythme 2 semaines / 2 semaines
+        en <strong>Île-de-France</strong>, à partir de septembre 2026.
+        Spécialisation <strong>Data & IA</strong> à l'ESIEA.
+      </p>
+      <div class="cta-actions">
+        <a href="mailto:mchaabnahakim@gmail.com" class="btn-primary">Me contacter →</a>
+        <a href="/approche" class="btn-outline">Mon approche</a>
+      </div>
+    </div>
+  </section>
+
 </Layout>
+
+<style>
+  /* ════════════════════════════════════════════
+     VARIABLES (identiques à index.astro)
+     ════════════════════════════════════════════ */
+  :root {
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: rgba(0, 0, 0, 0.06);
+    --text-secondary: #666;
+    --bg-card: #f7f7f8;
+    --text: #1a1a1a;
+    --radius: 12px;
+  }
+
+  /* ════════════════════════════════════════════
+     EN-TÊTE
+     ════════════════════════════════════════════ */
+  .cv-header {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cv-name {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin: 0 0 0.35rem;
+  }
+
+  .cv-role {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 0 0 0.25rem;
+  }
+
+  .cv-meta {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* ════════════════════════════════════════════
+     SECTIONS
+     ════════════════════════════════════════════ */
+  .cv-section {
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cv-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .cv-section-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin: 0 0 1.25rem;
+  }
+
+  .cv-text {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 700px;
+    margin: 0;
+  }
+
+  /* ════════════════════════════════════════════
+     TIMELINE (formations & expérience)
+     ════════════════════════════════════════════ */
+  .timeline {
+    position: relative;
+    padding-left: 1.75rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--border);
+    border-radius: 2px;
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 1.75rem;
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -1.75rem;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  .timeline-time {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.2rem;
+  }
+
+  .timeline-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 0.2rem;
+    letter-spacing: -0.01em;
+  }
+
+  .timeline-place {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin: 0 0 0.15rem;
+    font-weight: 500;
+  }
+
+  .timeline-desc {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0.25rem 0 0;
+  }
+
+  /* ════════════════════════════════════════════
+     CARDS (projets)
+     ════════════════════════════════════════════ */
+  .cv-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cv-card {
+    display: block;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s ease;
+    position: relative;
+  }
+
+  .cv-card:hover {
+    border-color: var(--accent);
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .cv-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cv-card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+    transition: color 0.2s;
+  }
+
+  .cv-card:hover .cv-card-title {
+    color: var(--accent);
+  }
+
+  .cv-card-date {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .cv-card-desc {
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  .cv-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .cv-tags span {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    color: var(--accent);
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .cv-card:hover .cv-tags span {
+    border-color: rgba(37, 99, 235, 0.2);
+  }
+
+  .cv-card-arrow {
+    display: block;
+    text-align: right;
+    font-size: 1rem;
+    color: #ccc;
+    margin-top: 0.75rem;
+    transition: all 0.25s;
+  }
+
+  .cv-card:hover .cv-card-arrow {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  /* ════════════════════════════════════════════
+     COMPÉTENCES
+     ════════════════════════════════════════════ */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .skill-group {
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+  }
+
+  .skill-group-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+  }
+
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .skill-pills span {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: var(--text);
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .skill-pills span:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ════════════════════════════════════════════
+     SAVOIR-ÊTRE
+     ════════════════════════════════════════════ */
+  .soft-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .soft-card {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    transition: all 0.2s;
+  }
+
+  .soft-card:hover {
+    border-color: rgba(0, 0, 0, 0.12);
+    background: #ffffff;
+  }
+
+  .soft-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .soft-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+    color: var(--text);
+  }
+
+  .soft-desc {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* ════════════════════════════════════════════
+     LANGUES + CENTRES D'INTÉRÊT
+     ════════════════════════════════════════════ */
+  .two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .langues-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .langue-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .langue-row:last-child {
+    border-bottom: none;
+  }
+
+  .langue-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .langue-level {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  .interest-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .interest-pills span {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════════
+     CTA (identique à index.astro)
+     ════════════════════════════════════════════ */
+  .cta-section {
+    padding: 3rem 0 2rem;
+  }
+
+  .cta-box {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 2.5rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.03), rgba(16, 185, 129, 0.03));
+  }
+
+  .cta-box h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin: 0 0 1rem;
+    color: var(--text);
+  }
+
+  .cta-box p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin: 0 0 1.5rem;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ════════════════════════════════════════════
+     BUTTONS (identiques à index.astro)
+     ════════════════════════════════════════════ */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--text);
+    color: var(--text);
+  }
+
+  /* ════════════════════════════════════════════
+     RESPONSIVE
+     ════════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .skills-grid,
+    .soft-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .two-cols {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cv-header {
+      text-align: center;
+    }
+
+    .cv-card-header {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+    }
+  }
+</style>
