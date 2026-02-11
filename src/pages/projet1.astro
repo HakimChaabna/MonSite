@@ -204,7 +204,7 @@ const context = 'Prépa MPSI · Lycée Saint-Rémi · 2025'
       <div class="mechanism">
         <div class="mechanism-tag">Génétique</div>
         <h4>Consanguinité</h4>
-        <p>Les nouveaux loups naissent avec une santé réduite (0.8 au lieu de 1.0), simulant les effets de la consanguinité observés sur l'Isle Royale.</p>
+        <p>Les nouveaux loups naissent avec une santé réduite, simulant les effets de la consanguinité observés sur l'Isle Royale.</p>
       </div>
       <div class="mechanism">
         <div class="mechanism-tag">Équilibre</div>
@@ -240,7 +240,7 @@ const context = 'Prépa MPSI · Lycée Saint-Rémi · 2025'
       <div class="comparison-vs">VS</div>
       <figure class="comparison-card">
         <div class="comparison-label">Ma simulation</div>
-        <img src="/images/projets/proies-predateurs/simulation-graph.png" alt="Graphe de la simulation" />
+        <img src="/images/projets/proies-predateurs/simulation-graphe.png" alt="Graphe de la simulation" />
         <figcaption>Grille 50×50, 70 générations</figcaption>
       </figure>
     </div>
@@ -321,7 +321,7 @@ const context = 'Prépa MPSI · Lycée Saint-Rémi · 2025'
         <h4>Simplifications</h4>
         <ul>
           <li>Pas de saisons ni de variation climatique</li>
-          <li>Pas de migration — l'île est fermée</li>
+          <li>Pas de migration, l'île est fermée</li>
           <li>Génétique et maladies peu détaillées</li>
           <li>Paramètres de simulation fixes</li>
         </ul>
@@ -357,14 +357,14 @@ const context = 'Prépa MPSI · Lycée Saint-Rémi · 2025'
       <p>
         Le modèle actuel repose sur des paramètres fixés à la main : taux de reproduction,
         seuils de santé, pénalités. Ces choix fonctionnent, mais ils sont le fruit
-        de mon intuition et de mes essais — pas d'une optimisation rigoureuse.
+        de mon intuition et de mes essais, pas d'une optimisation rigoureuse.
       </p>
       <p>
         Je travaille actuellement sur l'intégration d'un <strong>algorithme génétique</strong>
         pour calibrer automatiquement ces paramètres. Le principe : générer des centaines
         de simulations avec des configurations différentes, évaluer leur proximité avec
         les données réelles de l'Isle Royale, et faire "survivre" les meilleures
-        configurations — génération après génération.
+        configurations, génération après génération.
       </p>
 
       <div class="next-highlight">
@@ -393,7 +393,7 @@ const context = 'Prépa MPSI · Lycée Saint-Rémi · 2025'
       <p>
         Ce travail montre qu'il est possible de reproduire <strong>partiellement</strong>
         les cycles d'un écosystème réel avec un modèle informatique simple.
-        La simulation ne prétend pas remplacer la complexité du vivant —
+        La simulation ne prétend pas remplacer la complexité du vivant,
         elle permet de <strong>comprendre les mécanismes fondamentaux</strong>
         qui gouvernent ces dynamiques.
       </p>
@@ -412,10 +412,10 @@ const context = 'Prépa MPSI · Lycée Saint-Rémi · 2025'
   <nav class="project-nav">
     <a href="/projets" class="nav-back">← Retour aux projets</a>
     <div class="nav-links">
-      <a href="/documents/TIPE-proies-predateurs.pdf" target="_blank" class="btn-outline">
+      <a href="/fichiers/projets/proies-predateurs/Hakim-CHAABNA-TIPE.pdf" target="_blank" class="btn-outline">
         📄 PDF complet
       </a>
-      <a href="https://github.com/TON-GITHUB/proies-predateurs" target="_blank" class="btn-primary">
+      <a href="https://github.com/HakimChaabna/proies-predateurs" target="_blank" class="btn-primary">
         Voir le code source →
       </a>
     </div>
@@ -1139,9 +1139,7 @@ const context = 'Prépa MPSI · Lycée Saint-Rémi · 2025'
   /* ════════════════════════════════════════════
      ET ENSUITE
      ════════════════════════════════════════════ */
-  .next-content {
-    max-width: 650px;
-  }
+
 
   .next-content p {
     font-size: 0.92rem;
