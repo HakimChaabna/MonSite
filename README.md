@@ -1,4 +1,4 @@
-# hakim-chaabna.dev
+# hakimchaabna.fr
 
 Portfolio personnel — Astro + Tailwind + DaisyUI.
 
