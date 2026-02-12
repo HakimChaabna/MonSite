@@ -3,8 +3,8 @@ import Layout from '@/layouts/Layout.astro'
 
 const title = 'Capteur de maintenance prédictive'
 const subtitle = 'Un système embarqué autonome, alimenté par la chaleur des machines'
-const tags = ['ESP32', 'MicroPython', 'BLE', 'BQ25570', 'Thermoélectricité', 'TIPE 2025']
-const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
+const tags = ['ESP32', 'MicroPython', 'BLE', 'BQ25570', 'Thermoélectricité']
+const context = 'Prépa MP · Lycée Saint-Rémi · 2026'
 ---
 
 <Layout>
@@ -26,7 +26,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
       </div>
       <div class="hero-actions">
         <a href="#probleme" class="btn-primary">Découvrir le projet ↓</a>
-        <a href="https://github.com/TON-GITHUB/capteur-predictif" target="_blank" class="btn-outline">
+        <a href="https://github.com/HakimChaabna/CapteurMaintenancePredictive" target="_blank" class="btn-outline">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
           Code source
         </a>
@@ -39,18 +39,18 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   <!-- ═══════════════════════════════════════════ -->
   <section class="metrics">
     <div class="metric">
-      <span class="metric-value">330 mV</span>
-      <span class="metric-label">tension de démarrage à froid</span>
+      <span class="metric-value">~330 mV</span>
+      <span class="metric-label">cold-start typique</span>
     </div>
     <div class="metric-divider"></div>
     <div class="metric">
-      <span class="metric-value">3.5 µA</span>
-      <span class="metric-label">consommation capteur (BMA400)</span>
+      <span class="metric-value">µA/mA</span>
+      <span class="metric-label">en veille/en émission</span>
     </div>
     <div class="metric-divider"></div>
     <div class="metric">
-      <span class="metric-value">0</span>
-      <span class="metric-label">batterie nécessaire</span>
+      <span class="metric-value">1-5 min</span>
+      <span class="metric-label">cycle de mesure & envoi</span>
     </div>
     <div class="metric-divider"></div>
     <div class="metric">
@@ -64,23 +64,25 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   <!-- ═══════════════════════════════════════════ -->
   <section id="probleme" class="content-section">
     <div class="section-label">01 — Le problème</div>
-    <h2 class="section-title">Surveiller des machines<br/>sans câble ni batterie</h2>
+    <h2 class="section-title">Surveiller des machines sans câble ni batterie</h2>
     <div class="col-text-full">
       <p>
-        Dans l'industrie, la surveillance des machines tournantes (moteurs, pompes, ventilateurs)
-        repose encore largement sur une <strong>maintenance systématique</strong> — coûteuse, rigide,
-        et souvent trop tardive. La maintenance prédictive, basée sur l'analyse vibratoire,
-        permet d'anticiper les pannes avant qu'elles ne surviennent.
+        Dans l'industrie, la surveillance des systèmes mécaniques complexes (machines industrielles, systèmes de transport)
+        repose encore largement sur une <strong>maintenance systématique</strong>, fondées sur des 
+        intervalles fixes. Bien que robustes, ces approches restent rigides et peu représentatives 
+        de l’état réel des machines. <br>La <strong>maintenance prédictive</strong>, notamment basée sur 
+        l’analyse vibratoire, permet au contraire de détecter précocement les dégradations mécaniques et 
+        d’anticiper les pannes.
       </p>
       <p>
-        Mais deux obstacles freinent son déploiement massif : le <strong>câblage</strong>,
-        difficile et coûteux sur des machines déjà en place, et l'<strong>alimentation</strong>,
-        qui impose des batteries à remplacer régulièrement.
+        Cependant, son déploiement à grande échelle reste limité par des contraintes pratiques, 
+        en particulier le <strong>câblage</strong> sur des installations existantes et <strong>l’alimentation</strong> énergétique des capteurs, 
+        souvent assurée par des batteries nécessitant une maintenance régulière.
       </p>
       <blockquote class="question-block">
         « Comment concevoir un système de mesure sans fil, capable d'assurer un suivi
         vibratoire précis, en s'alimentant exclusivement à partir du gradient thermique
-        d'une machine industrielle ? »
+        local ? »
       </blockquote>
       <div class="challenges-row">
         <div class="challenge">
@@ -124,8 +126,8 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
         <div class="chain-number">2</div>
         <div class="chain-icon">⚡</div>
         <h4>Gestion d'énergie</h4>
-        <span class="chain-component">BQ25570</span>
-        <p>MPPT + boost converter. Démarrage à froid à 330 mV, charge optimisée d'un supercondensateur. Supervision de l'état énergétique.</p>
+        <span class="chain-component">BQ25570 + LIC</span>
+        <p>Gestion intelligente de l’énergie permettant un démarrage à très basse tension (~330 mV), une charge optimisée du stockage et une supervision continue de l’état énergétique.</p>
       </div>
       <div class="chain-arrow">→</div>
       <div class="chain-card">
@@ -141,7 +143,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
         <div class="chain-icon">📲</div>
         <h4>Transmission</h4>
         <span class="chain-component">BLE</span>
-        <p>Envoi des données synthétisées via Bluetooth Low Energy — le protocole le plus sobre pour des trames courtes.</p>
+        <p>Envoi des données synthétisées via Bluetooth Low Energy, un protocole particulièrement adapté aux transmissions courtes et peu énergivores.</p>
       </div>
     </div>
   </section>
@@ -163,7 +165,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
           <span class="cycle-dot cycle-sleep"></span>
           <h4>Phase de sommeil</h4>
         </div>
-        <p>Le TEG alimente lentement le supercondensateur. L'ESP32 est en deep sleep (~10 µA). Le BMA400 est en veille (~3.5 µA). L'énergie s'accumule.</p>
+        <p>Le TEG alimente lentement le condensateur Lithium-Ion. L'ESP32 est en deep sleep. Le BMA400 est en veille. L'énergie s'accumule.</p>
         <span class="cycle-duration">~1 à 5 min</span>
       </div>
       <div class="cycle-connector"></div>
@@ -172,8 +174,8 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
           <span class="cycle-dot cycle-wake"></span>
           <h4>Réveil</h4>
         </div>
-        <p>La tension du supercondensateur atteint le seuil. Le BQ25570 autorise l'alimentation. L'ESP32 sort du deep sleep et initialise les interfaces.</p>
-        <span class="cycle-duration">~50 ms</span>
+        <p>Lorsque la tension du condensateur Lithium-Ion atteint un seuil suffisant, l’alimentation du système est autorisée. L’ESP32 sort alors du mode veille profonde et initialise ses interfaces.</p>
+        <span class="cycle-duration">~50-200 ms</span>
       </div>
       <div class="cycle-connector"></div>
       <div class="cycle-step">
@@ -182,7 +184,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
           <h4>Mesure & traitement</h4>
         </div>
         <p>Acquisition vibratoire 3 axes via I²C. Filtrage et calcul de la valeur RMS. Préparation de la trame de données.</p>
-        <span class="cycle-duration">~200 ms</span>
+        <span class="cycle-duration">~100-500 ms</span>
       </div>
       <div class="cycle-connector"></div>
       <div class="cycle-step">
@@ -191,7 +193,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
           <h4>Transmission BLE</h4>
         </div>
         <p>Envoi de la trame synthétisée via Bluetooth Low Energy. Déconnexion immédiate pour minimiser la consommation.</p>
-        <span class="cycle-duration">~100 ms</span>
+        <span class="cycle-duration">~50-500 ms</span>
       </div>
       <div class="cycle-connector"></div>
       <div class="cycle-step">
@@ -225,18 +227,18 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
       </div>
       <div class="component-card">
         <div class="component-tag">Stockage</div>
-        <h4>Supercondensateur</h4>
-        <p>Tampon énergétique entre production continue (TEG) et consommation impulsionnelle (ESP32). Grand nombre de cycles, faible ESR, pas de tension minimale.</p>
+        <h4>Condensateur Lithium-Ion (LIC)</h4>
+        <p>Stockage d’énergie jouant le rôle de tampon entre l’énergie récoltée en continu et les phases actives du système.</p>
       </div>
       <div class="component-card">
         <div class="component-tag">Capteur</div>
         <h4>BMA400 (Bosch Sensortec)</h4>
-        <p>Accéléromètre MEMS triaxial ultra-basse consommation (3.5 µA). Fonction auto-wake-up intégrée, mesure numérique précise, interface I²C.</p>
+        <p>Accéléromètre MEMS triaxial ultra-basse consommation (~15 µA). Fonction auto-wake-up intégrée, mesure numérique précise, interface I²C.</p>
       </div>
       <div class="component-card">
         <div class="component-tag">Traitement</div>
         <h4>ESP32 + MicroPython</h4>
-        <p>Microcontrôleur avec deep sleep (~10 µA), BLE intégré, programmé en MicroPython pour un prototypage rapide. Réveil périodique configurable.</p>
+        <p>Microcontrôleur avec deep sleep, BLE intégré, programmé en MicroPython pour un prototypage rapide. Réveil périodique configurable.</p>
       </div>
       <div class="component-card">
         <div class="component-tag">Communication</div>
@@ -251,10 +253,10 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   <!-- ═══════════════════════════════════════════ -->
   <section class="content-section">
     <div class="section-label">05 — De la donnée à la prédiction</div>
-    <h2 class="section-title">Construire une intelligence<br/>à partir des vibrations</h2>
+    <h2 class="section-title">Construire une intelligence à partir des vibrations</h2>
 
     <p class="section-intro">
-      Le capteur ne se contente pas de mesurer — il alimente un pipeline de données
+      Le capteur ne se contente pas de mesurer, il alimente un pipeline de données
       conçu pour apprendre à détecter les anomalies et anticiper les pannes.
     </p>
 
@@ -293,7 +295,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
             À partir de cet historique, un <strong>modèle de machine learning</strong>
             apprend à distinguer le fonctionnement normal de la machine de ses
             comportements anormaux. Variations d'amplitude inhabituelles, changements
-            fréquentiels, dérives progressives — autant de signaux avant-coureurs
+            fréquentiels, dérives progressives. Autant de signaux avant-coureurs
             de panne détectables automatiquement.
           </p>
         </div>
@@ -306,19 +308,10 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
           <p>
             L'objectif final : un système qui <strong>apprend en continu</strong>
             à partir de ses propres mesures, affine ses seuils d'alerte
-            et anticipe les défaillances avant qu'elles ne surviennent —
+            et anticipe les défaillances avant qu'elles ne surviennent,
             le tout sans intervention humaine ni source d'énergie externe.
           </p>
         </div>
-      </div>
-    </div>
-
-    <div class="data-highlight">
-      <div class="data-highlight-icon">📊</div>
-      <div>
-        <strong>Le lien avec ma spécialisation :</strong> ce projet illustre la boucle
-        complète capteur → donnée → apprentissage → décision. C'est exactement
-        l'intersection entre IoT et Data Science sur laquelle je veux me spécialiser.
       </div>
     </div>
   </section>
@@ -346,14 +339,14 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
         <div class="roadmap-status">✓</div>
         <div class="roadmap-content">
           <h4>Architecture système</h4>
-          <p>Définition de la chaîne complète : TEG → BQ25570 → supercondensateur → ESP32 → BMA400 → BLE.</p>
+          <p>Définition de la chaîne complète : TEG → BQ25570 → LIC → ESP32 → BMA400 → BLE.</p>
         </div>
       </div>
       <div class="roadmap-item done">
         <div class="roadmap-status">✓</div>
         <div class="roadmap-content">
           <h4>Approvisionnement des composants</h4>
-          <p>Commande et réception du TEG, BQ25570, supercondensateur, BMA400, ESP32 et dissipateur.</p>
+          <p>Commande et réception du TEG, BQ25570, LIC, BMA400, ESP32 et dissipateur.</p>
         </div>
       </div>
       <div class="roadmap-item active">
@@ -370,8 +363,8 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
           <p>Code MicroPython : gestion du deep sleep, acquisition I²C, calcul RMS, transmission BLE.</p>
         </div>
       </div>
-      <div class="roadmap-item pending">
-        <div class="roadmap-status">○</div>
+      <div class="roadmap-item active">
+        <div class="roadmap-status">⏳</div>
         <div class="roadmap-content">
           <h4>Tests & bilan de puissance</h4>
           <p>Mesure de l'énergie produite vs consommée. Définition du rapport cyclique optimal.</p>
@@ -381,7 +374,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
         <div class="roadmap-status">○</div>
         <div class="roadmap-content">
           <h4>Validation vibratoire</h4>
-          <p>Test sur ventilateur, analyse fréquentielle, comparaison avec les seuils ISO 10816.</p>
+          <p>Tests expérimentaux sur un système mécanique, avec analyse fréquentielle des vibrations.</p>
         </div>
       </div>
     </div>
@@ -403,8 +396,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
         Ce projet combine <strong>électronique analogique</strong> (TEG, BQ25570),
         <strong>numérique</strong> (ESP32, MicroPython, BLE),
         <strong>traitement du signal</strong> (FFT, RMS) et
-        <strong>physique</strong> (thermodynamique, mécanique vibratoire)
-        — les fondations de ma spécialisation en Data & IoT.
+        <strong>physique</strong> (thermodynamique, mécanique vibratoire).
       </p>
     </div>
   </section>
@@ -415,10 +407,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   <nav class="project-nav">
     <a href="/projets" class="nav-back">← Retour aux projets</a>
     <div class="nav-links">
-      <a href="/documents/MCOT-capteur-predictif.pdf" target="_blank" class="btn-outline">
-        📄 Fiche MCOT
-      </a>
-      <a href="https://github.com/TON-GITHUB/capteur-predictif" target="_blank" class="btn-primary">
+      <a href="https://github.com/HakimChaabna/CapteurMaintenancePredictive" target="_blank" class="btn-primary">
         Voir le code source →
       </a>
     </div>
@@ -555,8 +544,8 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2025'
   }
 
   .btn-outline:hover {
-    border-color: var(--text-primary);
-    color: var(--text-primary);
+    color: white;
+    border-color: white;
   }
 
   /* ════════════════════════════════════════════
