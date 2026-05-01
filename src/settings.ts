@@ -10,7 +10,7 @@ export const profile = {
 
 // Set equal to an empty string to hide the icon that you don't want to display
 export const social = {
-	email: 'mchaabnahakim@gmail.com',
+	email: 'hakimchaabna@icloud.com',
 	linkedin: 'https://www.linkedin.com/in/hakim-chaabna/',
 	x: '',
 	bluesky: '',
