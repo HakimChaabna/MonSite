@@ -13,10 +13,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2026'
   <!-- ═══════════════════════════════════════════ -->
   <section class="hero">
     <div class="hero-header">
-      <div class="hero-top-row">
-        <span class="hero-badge">{context}</span>
-        <span class="status-badge">🔧 Projet en cours</span>
-      </div>
+      <span class="hero-badge">{context}</span>
       <h1 class="hero-title">{title}</h1>
       <p class="hero-subtitle">{subtitle}</p>
       <div class="hero-tags">
@@ -44,13 +41,13 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2026'
     </div>
     <div class="metric-divider"></div>
     <div class="metric">
-      <span class="metric-value">µA/mA</span>
+      <span class="metric-value">0.05 / 2.64 mW</span>
       <span class="metric-label">en veille/en émission</span>
     </div>
     <div class="metric-divider"></div>
     <div class="metric">
-      <span class="metric-value">1-5 min</span>
-      <span class="metric-label">cycle de mesure & envoi</span>
+      <span class="metric-value">1 / 2 min</span>
+      <span class="metric-label">cycle de mesure/sommeil</span>
     </div>
     <div class="metric-divider"></div>
     <div class="metric">
@@ -126,7 +123,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2026'
         <div class="chain-number">2</div>
         <div class="chain-icon">⚡</div>
         <h4>Gestion d'énergie</h4>
-        <span class="chain-component">BQ25570 + LIC</span>
+        <span class="chain-component">BQ25570 + Supercondensateurs</span>
         <p>Gestion intelligente de l’énergie permettant un démarrage à très basse tension (~330 mV), une charge optimisée du stockage et une supervision continue de l’état énergétique.</p>
       </div>
       <div class="chain-arrow">→</div>
@@ -165,17 +162,17 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2026'
           <span class="cycle-dot cycle-sleep"></span>
           <h4>Phase de sommeil</h4>
         </div>
-        <p>Le TEG alimente lentement le condensateur Lithium-Ion. L'ESP32 est en deep sleep. Le BMA400 est en veille. L'énergie s'accumule.</p>
-        <span class="cycle-duration">~1 à 5 min</span>
+        <p>Le TEG alimente lentement les Supercondensateurs. L'ESP32 est en deep sleep. Le BMA400 est en veille. L'énergie s'accumule.</p>
+        <span class="cycle-duration">2 min</span>
       </div>
       <div class="cycle-connector"></div>
       <div class="cycle-step">
         <div class="cycle-step-header">
           <span class="cycle-dot cycle-wake"></span>
-          <h4>Réveil</h4>
+          <h4>Phase de Réveil</h4>
         </div>
-        <p>Lorsque la tension du condensateur Lithium-Ion atteint un seuil suffisant, l’alimentation du système est autorisée. L’ESP32 sort alors du mode veille profonde et initialise ses interfaces.</p>
-        <span class="cycle-duration">~50-200 ms</span>
+        <p>Lorsque la tension des Supercondensateurs atteint un seuil suffisant, l’alimentation du système est autorisée. L’ESP32 sort alors du mode veille profonde et initialise ses interfaces.</p>
+        <span class="cycle-duration">1 min</span>
       </div>
       <div class="cycle-connector"></div>
       <div class="cycle-step">
@@ -183,8 +180,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2026'
           <span class="cycle-dot cycle-measure"></span>
           <h4>Mesure & traitement</h4>
         </div>
-        <p>Acquisition vibratoire 3 axes via I²C. Filtrage et calcul de la valeur RMS. Préparation de la trame de données.</p>
-        <span class="cycle-duration">~100-500 ms</span>
+        <p>Un accéléromètre BMA400 capte les vibrations de la machine selon trois axes, et un microcontrôleur ESP32 lit ces données en I2C.</p>
       </div>
       <div class="cycle-connector"></div>
       <div class="cycle-step">
@@ -193,7 +189,6 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2026'
           <h4>Transmission BLE</h4>
         </div>
         <p>Envoi de la trame synthétisée via Bluetooth Low Energy. Déconnexion immédiate pour minimiser la consommation.</p>
-        <span class="cycle-duration">~50-500 ms</span>
       </div>
       <div class="cycle-connector"></div>
       <div class="cycle-step">
@@ -202,7 +197,14 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2026'
           <h4>Retour en sommeil</h4>
         </div>
         <p>Désactivation de tous les périphériques. Retour en deep sleep. Le cycle recommence.</p>
-        <span class="cycle-duration">immédiat</span>
+      </div>
+      <div class="cycle-connector"></div>
+      <div class="cycle-step">
+        <div class="cycle-step-header">
+          <span class="cycle-dot cycle-sleep"></span>
+          <h4>Traitement</h4>
+        </div>
+        <p>  L'ordinateur analyse les vibrations reçues à l'aide d'outils de traitement du signal (FFT, RMS, kurtosis, spectrogramme) qui permettent d'identifier la signature d'un défaut mécanique</p>
       </div>
     </div>
   </section>
@@ -227,7 +229,7 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2026'
       </div>
       <div class="component-card">
         <div class="component-tag">Stockage</div>
-        <h4>Condensateur Lithium-Ion (LIC)</h4>
+        <h4>Supercondensateurs</h4>
         <p>Stockage d’énergie jouant le rôle de tampon entre l’énergie récoltée en continu et les phases actives du système.</p>
       </div>
       <div class="component-card">
@@ -339,39 +341,39 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2026'
         <div class="roadmap-status">✓</div>
         <div class="roadmap-content">
           <h4>Architecture système</h4>
-          <p>Définition de la chaîne complète : TEG → BQ25570 → LIC → ESP32 → BMA400 → BLE.</p>
+          <p>Définition de la chaîne complète : TEG → BQ25570 → Supercondensateurs → ESP32 → BMA400 → BLE.</p>
         </div>
       </div>
       <div class="roadmap-item done">
         <div class="roadmap-status">✓</div>
         <div class="roadmap-content">
           <h4>Approvisionnement des composants</h4>
-          <p>Commande et réception du TEG, BQ25570, LIC, BMA400, ESP32 et dissipateur.</p>
+          <p>Commande et réception du TEG, BQ25570, Supercondensateurs, BMA400, ESP32 et dissipateur.</p>
         </div>
       </div>
-      <div class="roadmap-item active">
-        <div class="roadmap-status">⏳</div>
+      <div class="roadmap-item done">
+        <div class="roadmap-status">✓</div>
         <div class="roadmap-content">
           <h4>Assemblage & câblage</h4>
           <p>Montage physique du prototype, câblage de la chaîne d'énergie et connexion des capteurs.</p>
         </div>
       </div>
-      <div class="roadmap-item active">
-        <div class="roadmap-status">⏳</div>
+      <div class="roadmap-item done">
+        <div class="roadmap-status">✓</div>
         <div class="roadmap-content">
           <h4>Développement logiciel</h4>
           <p>Code MicroPython : gestion du deep sleep, acquisition I²C, calcul RMS, transmission BLE.</p>
         </div>
       </div>
-      <div class="roadmap-item active">
-        <div class="roadmap-status">⏳</div>
+      <div class="roadmap-item done">
+        <div class="roadmap-status">✓</div>
         <div class="roadmap-content">
           <h4>Tests & bilan de puissance</h4>
           <p>Mesure de l'énergie produite vs consommée. Définition du rapport cyclique optimal.</p>
         </div>
       </div>
-      <div class="roadmap-item pending">
-        <div class="roadmap-status">○</div>
+      <div class="roadmap-item done">
+        <div class="roadmap-status">✓</div>
         <div class="roadmap-content">
           <h4>Validation vibratoire</h4>
           <p>Tests expérimentaux sur un système mécanique, avec analyse fréquentielle des vibrations.</p>
@@ -405,6 +407,9 @@ const context = 'Prépa MP · Lycée Saint-Rémi · 2026'
   <nav class="project-nav">
     <a href="/projets" class="nav-back">← Retour aux projets</a>
     <div class="nav-links">
+      <a href="/fichiers/projets/capteur-autonome/Hakim-CHAABNA-TIPE.pdf" target="_blank" class="btn-outline">
+        📄 PDF complet
+      </a>
       <a href="https://github.com/HakimChaabna/CapteurMaintenancePredictive" target="_blank" class="btn-primary">
         Voir le code source →
       </a>
